@@ -1,0 +1,127 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram id="21YdJFZTAt71oFULguNC" name="Page-1">
+    <mxGraphModel dx="1702" dy="1046" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#232F3E;" value="Anonymous WebSocket Chat — System Architecture" vertex="1">
+          <mxGeometry height="40" width="800" x="427" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_gh" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#cccccc;dashed=1;dashPattern=8 8;verticalAlign=top;align=center;spacingTop=8;fontSize=13;fontStyle=1;" value="GitHub Pages" vertex="1">
+          <mxGeometry height="280" width="280" x="60" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="user_mobile" parent="1" style="shape=mxgraph.aws4.user;fillColor=#232F3E;strokeColor=#ffffff;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=1;" value="Mobile / Desktop&lt;br&gt;Browser" vertex="1">
+          <mxGeometry height="60" width="60" x="100" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="react_app" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=12;" value="React + Vite + TS&lt;br&gt;(Static SPA)" vertex="1">
+          <mxGeometry height="50" width="120" x="200" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="e_user_react" edge="1" parent="1" source="user_mobile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="react_app" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ws_label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=11;fontColor=#666666;fontStyle=2;" value="WebSocket&lt;br&gt;(wss://)" vertex="1">
+          <mxGeometry height="40" width="90" x="370" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="grp_aws" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#FF9900;dashed=1;dashPattern=8 8;verticalAlign=top;align=center;spacingTop=8;fontSize=13;fontStyle=1;fontColor=#FF9900;" value="AWS Cloud" vertex="1">
+          <mxGeometry height="860" width="1100" x="480" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="apigw" parent="1" style="shape=mxgraph.aws4.api_gateway;fillColor=#232F3E;strokeColor=#ffffff;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=1;" value="API Gateway&lt;br&gt;(WebSocket API)" vertex="1">
+          <mxGeometry height="78" width="78" x="540" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e_react_apigw" edge="1" parent="1" source="react_app" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#FF9900;" target="apigw" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="route_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=12;fontStyle=1;" value="Route Selection&lt;br&gt;&lt;font style=&quot;font-size:10px&quot;&gt;$request.body.action&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="160" x="700" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="e_apigw_route" edge="1" parent="1" source="apigw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="route_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda_connect" parent="1" style="shape=mxgraph.aws4.lambda;fillColor=#232F3E;strokeColor=#ffffff;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=1;" value="connect&lt;br&gt;Lambda" vertex="1">
+          <mxGeometry height="78" width="78" x="960" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda_disconnect" parent="1" style="shape=mxgraph.aws4.lambda;fillColor=#232F3E;strokeColor=#ffffff;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=1;" value="disconnect&lt;br&gt;Lambda" vertex="1">
+          <mxGeometry height="78" width="78" x="960" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="lambda_send" parent="1" style="shape=mxgraph.aws4.lambda;fillColor=#232F3E;strokeColor=#ffffff;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=1;" value="send_message&lt;br&gt;Lambda" vertex="1">
+          <mxGeometry height="78" width="78" x="960" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="e_route_connect" edge="1" parent="1" source="route_box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;fontColor=#666666;" target="lambda_connect" value="$connect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_route_disconnect" edge="1" parent="1" source="route_box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;fontColor=#666666;" target="lambda_disconnect" value="$disconnect">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_route_send" edge="1" parent="1" source="route_box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;fontColor=#666666;" target="lambda_send" value="sendMessage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dynamodb" parent="1" style="shape=mxgraph.aws4.dynamodb;fillColor=#232F3E;strokeColor=#ffffff;fontColor=#232F3E;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=1;" value="DynamoDB&lt;br&gt;Connections" vertex="1">
+          <mxGeometry height="78" width="78" x="1240" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="e_connect_ddb" edge="1" parent="1" source="lambda_connect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;fontColor=#666666;" target="dynamodb" value="PutItem">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_disconnect_ddb" edge="1" parent="1" source="lambda_disconnect" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;fontColor=#666666;" target="dynamodb" value="DeleteItem">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_send_ddb" edge="1" parent="1" source="lambda_send" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;fontColor=#666666;" target="dynamodb" value="Scan + GetItem">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="post_label" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="PostToConnection&lt;br&gt;(fan-out to all clients)" vertex="1">
+          <mxGeometry height="50" width="170" x="720" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="e_send_post" edge="1" parent="1" source="lambda_send" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="post_label" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_post_apigw" edge="1" parent="1" source="post_label" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#666666;" target="apigw" value="push via&lt;br&gt;Management API">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ddb_schema" parent="1" style="swimlane;startSize=30;fillColor=#ffffff;strokeColor=#666666;fontSize=13;fontStyle=1;" value="Connections Table" vertex="1">
+          <mxGeometry height="130" width="220" x="1180" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="ddb_pk" parent="ddb_schema" style="text;html=1;strokeColor=none;fillColor=#ffffc0;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="connectionId (PK, String)" vertex="1">
+          <mxGeometry height="25" width="220" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ddb_callsign" parent="ddb_schema" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="callsign (String)" vertex="1">
+          <mxGeometry height="25" width="220" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="ddb_connected" parent="ddb_schema" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;fontSize=11;" value="connectedAt (String, ISO 8601)" vertex="1">
+          <mxGeometry height="25" width="220" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sam_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center;" value="Infrastructure as Code: AWS SAM (template.yaml)&lt;br&gt;All resources defined and deployed via SAM CLI" vertex="1">
+          <mxGeometry height="50" width="320" x="540" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#cccccc;dashed=1;dashPattern=8 8;" value="" vertex="1">
+          <mxGeometry height="240" width="340" x="60" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#232F3E;" value="Data Flow Summary" vertex="1">
+          <mxGeometry height="30" width="200" x="80" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_1" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" value="1. Browser opens WebSocket to API Gateway" vertex="1">
+          <mxGeometry height="22" width="300" x="80" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_2" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" value="2. $connect Lambda stores connectionId in DynamoDB" vertex="1">
+          <mxGeometry height="22" width="310" x="80" y="522" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" value="3. User sends message via sendMessage route" vertex="1">
+          <mxGeometry height="22" width="310" x="80" y="544" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" value="4. Lambda scans DynamoDB for all connections" vertex="1">
+          <mxGeometry height="22" width="310" x="80" y="566" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_5" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" value="5. PostToConnection fans out to all clients" vertex="1">
+          <mxGeometry height="22" width="310" x="80" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_6" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" value="6. $disconnect Lambda removes connectionId" vertex="1">
+          <mxGeometry height="22" width="310" x="80" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_7" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=11;" value="7. GoneException triggers stale connection cleanup" vertex="1">
+          <mxGeometry height="22" width="310" x="80" y="632" as="geometry" />
+        </mxCell>
+        <mxCell id="tech_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=10;" value="Frontend: React + Vite + TypeScript&lt;br&gt;Backend: Python 3.12 Lambdas&lt;br&gt;IaC: AWS SAM&lt;br&gt;Hosting: GitHub Pages (static)" vertex="1">
+          <mxGeometry height="80" width="240" x="60" y="740" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

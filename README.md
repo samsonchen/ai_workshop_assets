@@ -1,0 +1,119 @@
+# Agentic AI Engineering Course Suppkenentary Materials
+
+## Install Software
+
+Please install the following software on your laptop before the course. If you encounter any difficulties, you can install them on the day of the class.
+
+### If you're using MacOS
+- Microsoft Visual Studio Code
+- SourceTree for MacOS
+- Docker Desktop
+- uv:
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+- Claude Desktop
+- Claude Code
+- Pencil.dev Desktop
+- AWS CLI v2 (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+VS Code Extensions:
+- pencil.dev extension
+- Jupyter
+
+### If you're using Windows
+
+- WSL2:
+    Open PowerShell
+    wsl --install
+- Microsoft Visual Studio Code
+- SourceTree for Windows
+- Docker Desktop
+- VS Code Extension: code -install-extension ms-vscode-remote.remote.wsl
+- Windows Git (https://git-scm.com/install/windows)
+- Claude Desktop
+- Pencil.dev Desktop
+
+VS Code Extensions:
+- pencil.dev extension
+- Jupyter
+
+Install in WSL2:
+- Claude Code
+- uv:
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+- npm:
+    sudo apt update
+    sudo apt install nodejs npm -y
+- unzip:
+    sudo apt install unzip
+- pencil CLI:
+    npm install -g @pencil.dev/cli
+- AWS CLI v2 (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+## Prepare Cloud Service Accounts
+
+Please prepare accounts for at least the following three cloud services. If your project uses other cloud services, prepare those accounts as well:
+
+ - GitHub 
+ - AWS (requires credit card, but no charges if usage doesn't exceed free tier)
+ - Pencil.dev
+
+## Addtional Commands to check
+
+### GitHub CLI
+
+- gh auth login
+
+### on WSL2
+
+- Add ssh agent to .profile:
+  eval "$(ssh-agent -s)" 
+- Install GitHub CLI
+  https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+
+## GitHub Tokens
+
+Two types of security tokens are needed
+
+### SSH and CPG keys
+
+Settings -> SSH and GPG keys
+
+#### create key
+
+```script
+ssh-keygen -t ed25519 -f {key_name}
+```
+
+- Put key pairs in ~/.ssh
+- make sure the mode of .ssh is 700
+- Paste the public key on GitHub
+
+#### load key in OS
+
+```script
+ssh-add ~/.ssh/{key_name}
+```
+
+### Personal access tokens (PAT)
+
+Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens
+
+Generate the token for the MCP to use
+
+## MCP setting
+
+```text
+   "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN={your_GitHub_PAT}",
+        "ghcr.io/github/github-mcp-server"
+      ]
+    }
+  },
+```

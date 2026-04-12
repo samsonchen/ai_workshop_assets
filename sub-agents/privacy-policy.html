@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh">
+        <script type="text/javascript">
+            const url = window.location.href
+            try {
+                var lang = /lang=([^&]+)/.exec(url)[1];
+            }
+            catch(err) {
+                lang = 'default';
+            }
+
+            if (lang == 'en') {
+                window.location = 'https://goto.careactive.ai/static/privacy-policy/'
+            } else if (lang == 'zh-tw') {
+                window.location = 'https://goto.careactive.ai/static/privacy-policy/'
+            } else if (lang == 'ja-jp') {
+                window.location = 'https://hitori-omamori.jp/policies/privacy-policy'
+            } else {
+                window.location = 'https://goto.careactive.ai/static/privacy-policy/'
+            }
+        </script>
+        <title>Page Redirection</title>
+    </head>
+    <body>
+        Your page should be redirected automatically...
+    </body>
+</html>
+
