@@ -1,4 +1,4 @@
-# Agentic AI Engineering Course Suppkenentary Materials
+# Agentic AI Engineering Course Supplementary Materials
 
 ## Install Software
 
