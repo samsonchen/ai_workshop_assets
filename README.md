@@ -142,3 +142,7 @@ Generate the token for the MCP to use
     }
   },
 ```
+
+## Continue Learning
+
+[Anthropic Academy](https://anthropic.skilljar.com)
