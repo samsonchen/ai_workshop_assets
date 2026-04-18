@@ -31,6 +31,7 @@ VS Code Extensions:
 - [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 - [Windows Git](https://git-scm.com/install/windows)
 - Claude Desktop
+- Claude Code on Windows Powershell
 - Pencil.dev Desktop
 
 VS Code Extensions:
