@@ -40,6 +40,11 @@ VS Code Extensions:
 
 Install in WSL2:
 - Claude Code
+- SSH Agent
+    sudo apt install keychain
+
+    # add the following command to .profile
+    eval "$(keychain --eval --quiet .ssh/id_ed25519)"
 - uv:
     curl -LsSf https://astral.sh/uv/install.sh | sh
 - npm:
@@ -50,6 +55,24 @@ Install in WSL2:
 - pencil CLI:
     npm install -g @pencil.dev/cli
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+### Generate SSH Key
+    # make sure at user home
+    mkdir .ssh
+    chmod 700 .ssh
+    cd .ssh
+    ssh-keygen -t ed25519 -C "your_email@example.com"
+
+### AWS Configuration
+    # Use this command to configure AWS access key
+    aws configure
+
+    Default region name: us-west-2
+    Default output format: json
+
+### Complete git settings
+    git config --global user.email "{your_email}"
+    git config --global user.name "{your fullname}"
 
 ## Prepare Cloud Service Accounts
 
