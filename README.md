@@ -152,9 +152,11 @@ Generate the token for the MCP to use
 ### claude.formosa Discord Server
 
 ![claude.formosa Discord](./claude-formosa-qr-discord.png)
+
 [https://discord.gg/fWcPCyMBta](https://discord.gg/fWcPCyMBta)
 
 ### claude.formosa Threads
 
 ![claude.formosa Threads](./claude-formosa-qr-threads.png)
+
 [https://www.threads.com/@claude.formosa](https://www.threads.com/@claude.formosa)
