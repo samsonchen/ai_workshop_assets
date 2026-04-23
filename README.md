@@ -9,7 +9,7 @@ Please install the following software on your laptop before the course. If you e
 - SourceTree for MacOS
 - Docker Desktop
 - uv:
-    curl -LsSf https://astral.sh/uv/install.sh | sh
+    - curl -LsSf https://astral.sh/uv/install.sh | sh
 - Claude Desktop
 - Claude Code
 - Pencil.dev Desktop
@@ -42,7 +42,7 @@ VS Code Extensions:
 Install in WSL2:
 - Claude Code
 - SSH Agent
-    sudo apt install keychain
+    - sudo apt install keychain
 
     ```
     # add the following command to .profile
@@ -51,12 +51,12 @@ Install in WSL2:
 - uv:
     curl -LsSf https://astral.sh/uv/install.sh | sh
 - npm:
-    sudo apt update
-    sudo apt install nodejs npm -y
+    - sudo apt update
+    - sudo apt install nodejs npm -y
 - unzip:
-    sudo apt install unzip
+    - sudo apt install unzip
 - pencil CLI:
-    npm install -g @pencil.dev/cli
+    - npm install -g @pencil.dev/cli
 - [GitHub CLI](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
