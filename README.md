@@ -44,7 +44,7 @@ Install in WSL2:
 - SSH Agent
     sudo apt install keychain
 
-    # add the following command to .profile
+     ```#add the following command to .profile```
     eval "$(keychain --eval --quiet .ssh/id_ed25519)"
 - uv:
     curl -LsSf https://astral.sh/uv/install.sh | sh
