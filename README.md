@@ -23,8 +23,8 @@ VS Code Extensions:
 ### If you're using Windows
 
 - WSL2:
-    Open PowerShell
-    wsl --install
+    - Open PowerShell
+    - wsl --install
 - Microsoft Visual Studio Code
 - SourceTree for Windows
 - Docker Desktop
