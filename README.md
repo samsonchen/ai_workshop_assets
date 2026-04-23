@@ -13,6 +13,7 @@ Please install the following software on your laptop before the course. If you e
 - Claude Desktop
 - Claude Code
 - Pencil.dev Desktop
+- [GitHub CLI via HomeBrew](https://github.com/cli/cli/blob/trunk/docs/install_macos.md#homebrew)
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 VS Code Extensions:
@@ -35,7 +36,7 @@ VS Code Extensions:
 - Pencil.dev Desktop
 
 VS Code Extensions:
-- pencil.dev extension
+- pencil.dev extension (with WSL MCP)
 - Jupyter
 
 Install in WSL2:
@@ -54,6 +55,7 @@ Install in WSL2:
     sudo apt install unzip
 - pencil CLI:
     npm install -g @pencil.dev/cli
+- [GitHub CLI](https://github.com/cli/cli/blob/trunk/docs/install_linux.md)
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 
 ### Generate SSH Key
