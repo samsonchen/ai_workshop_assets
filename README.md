@@ -40,6 +40,12 @@ VS Code Extensions:
 - Jupyter
 
 Install in WSL2:
+- Update apt packages before any other installations
+
+    ```
+    sudo apt update
+    ```
+
 - Claude Code
 - SSH Agent
     - sudo apt install keychain
@@ -51,7 +57,6 @@ Install in WSL2:
 - uv:
     curl -LsSf https://astral.sh/uv/install.sh | sh
 - npm:
-    - sudo apt update
     - sudo apt install nodejs npm -y
 - unzip:
     - sudo apt install unzip
