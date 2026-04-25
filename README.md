@@ -91,7 +91,7 @@ Please prepare accounts for at least the following three cloud services. If your
  - AWS (requires credit card, but no charges if usage doesn't exceed free tier)
  - Pencil.dev
 
-## Addtional Commands to check
+## Additional Commands to check
 
 ### GitHub CLI
 
@@ -151,6 +151,36 @@ Generate the token for the MCP to use
     }
   },
 ```
+
+### Bridge Docker Desktop
+
+In the case you need to bridge your docker desktop, usually you don't, here are the procedures.
+
+#### In Apple Silicon MacOS
+
+- Start docker desktop
+- ```sudo socat TCP-LISTEN:2375,reuseaddr,fork UNIX-CLIENT:/var/run/docker.sock```
+
+#### WSL 1 / Windows 11 / UTM
+
+- ```- export DOCKER_HOST=tcp://{MacOS_IP}:2375```
+- Install Docker Client in WSL 1
+
+```script
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt install -y docker-ce-cli docker-buildx-plugin docker-compose-plugin
+```
+
+#### When to use Docker Bridge
+
+If your environment is 100% macOS or 100% native Windows on an x86 CPU, then you don't need it. If you are running Windows in a virtual machine hosted by UTM on Apple Silicon macOS, you cannot use nested virtualization, which means you cannot run WSL 2 and Docker Desktop inside the Windows VM. You need to run Docker on macOS and bridge it to WSL 1 on Windows.
+
 
 ## Continue Learning
 
