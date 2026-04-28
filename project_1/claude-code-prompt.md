@@ -1,8 +1,8 @@
-# Claude Code 執行指令：香茅廚房線上菜單
+# Claude Code 執行指令：餐廳線上菜單
 
 ## 專案概述
 
-基於 `@menu.pen`（Pencil.dev 設計稿，透過 MCP 讀取）與 `@menu-design-prompt.md`（設計規格文件）的內容，使用 **React + Vite + TypeScript** 建置一個手機專用的靜態餐廳菜單網站，部署在本 Repository 的 GitHub Pages 上。
+你是一個專業的資深 Front-End 工程師，基於提供的設計稿與設計規格文件的內容，使用 **React + Vite + TypeScript** 建置一個手機專用的靜態餐廳菜單網站，部署在本 Repository 的 GitHub Pages 上。
 
 ---
 
@@ -69,34 +69,36 @@ menu-i18n.ts（完整四語言資料，翻譯後放入此檔）
 
 ### menu-raw.ts
 
-格式與 `menu-design-prompt.md` 中「8-1. 簡化輸入格式」一致。這是店家人員實際會編輯的檔案。請從該文件中複製完整的 `menuRaw` 陣列作為初始資料。
+格式與**設計規格文件**中「8-1. 簡化輸入格式」一致。這是店家人員實際會編輯的檔案。請從該文件中複製完整的 `menuRaw` 陣列作為初始資料。
 
 ### menu-i18n.ts
 
-完整的四語言資料。初次建立時，請根據 `menu-raw.ts` 的中文內容，將所有品項名稱、規格標籤（大/小、杯/壺、烤雞腿/牛肉/蔬食等）、備註翻譯為英文、日文、韓文，寫入此檔。格式依 `menu-design-prompt.md` 中「8-2. 完整渲染格式」。
+完整的四語言資料。初次建立時，請根據 `menu-raw.ts` 的中文內容，將所有品項名稱、規格標籤（大/小、杯/壺、烤雞腿/牛肉/蔬食等）、備註翻譯為英文、日文、韓文，寫入此檔。格式依**設計規格文件**中「8-2. 完整渲染格式」。
 
 ---
 
 ## 設計參考
 
-1. **優先**從 `@menu.pen` 透過 Pencil MCP 讀取設計稿的色彩、字體、間距、元件佈局
-2. 若設計稿中未定義的細節，參考 `menu-design-prompt.md` 中的設計規範（第二節）
+1. **優先**從使用者輸入的設計稿讀取設計稿的色彩、字體、間距、元件佈局
+  - 設計稿若是 pencil 直透過 pencil MCP 讀取
+  - 設計稿若是 Claude Design, 則透過 Claude Design URL 取得
+2. 若設計稿中未定義的細節，參考**設計規格文件**中的設計規範（第二節）
 3. 整體視覺以 375px 寬手機為基準，不需處理桌面或平板適配
 
 ---
 
 ## 功能需求
 
-請完整實作 `menu-design-prompt.md` 中第三至第九節的所有功能，重點摘要：
+請完整實作**設計規格文件**中第三至第九節的所有功能，重點摘要：
 
 ### 必要功能清單
 
-- [ ] **Header**：店名（香茅廚房 Lemongrass Kitchen）、形象圖片、用餐限時 90 分鐘與低消 NT$300（多語言）
+- [ ] **Header**：店名、形象圖片、地址、電話（多語言）
 - [ ] **語言切換**：繁中/英/日/韓，sticky 定位，切換不重載頁面
 - [ ] **分類快捷列**：sticky，點擊可跳轉至對應分類區塊（smooth scroll）
 - [ ] **品項卡片**：照片（或 emoji fallback）、多語言名稱、價格含規格、標記 badge
 - [ ] **品項詳情 Modal**：Overlay 開啟、大圖可 pinch-to-zoom、說明與備註欄位、點擊外部或關閉鈕回到原位
-- [ ] **標記系統**：依 `menu-design-prompt.md` 第七節的標記對照表實作
+- [ ] **標記系統**：依**設計規格文件**第七節的標記對照表實作
 - [ ] **圖片 lazy loading**
 - [ ] **所有價格顯示 NT$ 前綴**
 
@@ -111,17 +113,20 @@ menu-i18n.ts（完整四語言資料，翻譯後放入此檔）
 ## GitHub Pages 部署
 
 ### vite.config.ts
+                                           
+設 `base: './'`，產出的資源路徑為相對路徑，
+同一份 `dist/` 可同時部署於以下三種情境而不需重 build：                                                                                                                                                                             
 
-需設定 `base` 為本 Repository 名稱，使 GitHub Pages 路徑正確：
+  - 預設 GitHub Pages 子路徑：`https://<username>.github.io/<repo>/`
+  - 自訂網域根路徑：`https://menu.example.com/`
+  - 本機 `npm run preview` 或直接開啟 `dist/index.html` 
 
 ```ts
-export default defineConfig({
-  base: '/<repository-name>/',  // 替換為實際 repo 名稱
-  // ...
-})
+  export default defineConfig({ 
+    base: './',
+    plugins: [react()],
+  })
 ```
-
-> 如果 repo 設定為使用自訂域名或是 `<username>.github.io` 主站，`base` 設為 `'/'`。
 
 ### GitHub Actions Workflow（.github/workflows/deploy.yml）
 
@@ -191,6 +196,6 @@ npm run preview  # 本地預覽 build 結果
 ## 注意事項
 
 - 所有翻譯（英文、日文、韓文）請盡量準確，菜名翻譯以觀光客能理解為優先，不需要逐字直譯
-- `menu-design-prompt.md` 中的標記定義表（第七節）是唯一的標記來源，不要自行新增或推測品項的標記
+- **設計規格文件**中的標記定義表（第七節）是唯一的標記來源，不要自行新增或推測品項的標記
 - 確保 Modal 開啟時 body 不可捲動，關閉後恢復捲動位置
 - 整個專案不應有任何 API 呼叫或外部資料依賴，所有資料都從 `src/data/` 靜態載入
