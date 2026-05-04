@@ -138,7 +138,7 @@ Generate the token for the MCP to use
 
 ### Using GitHub official Remote MCP (No Docker)
 
-Quicker but you need to load all toolsets.
+For Claude Code, this way is quicker but you need to load all toolsets.
 
 ```text
   "mcpServers": {
@@ -152,7 +152,7 @@ Quicker but you need to load all toolsets.
   },
 ```
 
-And, however, Since Claude Desktop supports only stdio, you need to bridge the command.
+For Claude Desktop, Since Claude Desktop supports only stdio, you need to bridge the command.
 
 ```text
   "mcpServers": {
