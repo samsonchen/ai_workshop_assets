@@ -131,6 +131,20 @@ ssh-keygen -t ed25519 -f {key_name}
 ssh-add ~/.ssh/{key_name}
 ```
 
+### All Cloud-Based Claude Code Solution
+
+1. Install [Claude GitHub App](https://github.com/apps/claude) with correct repp permissions
+2. Connect the default GitHub Connector on Claude Desktop (Settings -> Connectors -> GitHub Integration on Web Connector)
+3. Design pages with claude.ai/design (Model Sonnet) (drop ```menu-design.md``` and go)
+4. Create a new repo
+5. Enable GitHub Pages (using GitHub Actions)
+6. Open a new issue with the front-end design specifications (e.g. ```restaurant-menu-frontend.md```)
+7. Using Claude Desktop -> Claude Code -> Choose "Default" -> Select repo with this new repo
+8. Ask Claude Code to read and understand issue #1 (Use Plan Mode and Model Sonnet), (e.g. 請讀取 issue #1 並且了解裡面的內容與規格.)
+9. Ask Claude Code to implment the Claude Design handoff packs based on the front-end specifications (Use Accept edits mode) (e.g. 請基於你先前的了解將底下的設計稿依照 issue #1 的規格設計出來: {Claude Design handOff information})
+10. Create PR
+11. Merge PR
+
 ### Personal access tokens (PAT)
 
 Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens
