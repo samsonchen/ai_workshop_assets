@@ -7,14 +7,16 @@ Please install the following software on your laptop before the course. If you e
 ### If you're using MacOS
 - Microsoft Visual Studio Code
 - SourceTree for MacOS
-- Docker Desktop
 - uv:
     - curl -LsSf https://astral.sh/uv/install.sh | sh
 - Claude Desktop
 - Claude Code
+- Node:
+    - brew install node
 - Pencil.dev Desktop
 - [GitHub CLI via HomeBrew](https://github.com/cli/cli/blob/trunk/docs/install_macos.md#homebrew)
 - [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- Docker Desktop
 
 VS Code Extensions:
 - pencil.dev extension
@@ -27,13 +29,14 @@ VS Code Extensions:
     - wsl --install
 - Microsoft Visual Studio Code
 - SourceTree for Windows
-- Docker Desktop
 - VS Code Extension: code -install-extension ms-vscode-remote.remote.wsl
 - [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 - [Windows Git](https://git-scm.com/install/windows)
 - Claude Desktop
 - Claude Code on Windows Powershell
+- [node.js](https://nodejs.org/en/download)
 - Pencil.dev Desktop
+- Docker Desktop
 
 VS Code Extensions:
 - pencil.dev extension (with WSL MCP)
@@ -152,7 +155,7 @@ For Claude Code, this way is quicker but occupies more tokens to load all toolse
   },
 ```
 
-For Claude Desktop, Since Claude Desktop supports only stdio, you need to bridge the command.
+For **Claude Desktop MacOS**, Since Claude Desktop supports only stdio, you need to bridge the command.
 
 ```text
   "mcpServers": {
@@ -172,9 +175,29 @@ For Claude Desktop, Since Claude Desktop supports only stdio, you need to bridge
   },
 ```
 
+Note: If you are using **Claude Desktop Windows**, your mcpServers setting would be:
+
+```text
+  "mcpServers": {
+    "github": {
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://api.githubcopilot.com/mcp/",
+        "--header",
+        "Authorization: Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT"
+      }
+    }
+  },
+```
+
 ### With Local Docker
 
-More secured and you can control the toolsets you want.
+More secured and you can control the toolsets you want, but you need Docker Desktop running simultaneously.
 
 ```text
   "mcpServers": {
