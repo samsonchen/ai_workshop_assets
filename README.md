@@ -136,8 +136,48 @@ Generate the token for the MCP to use
 
 ## MCP setting
 
+### Using GitHub official Remote MCP (No Docker)
+
+Quicker but you need to take all toolsets.
+
 ```text
-   "mcpServers": {
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer YOUR_GITHUB_PAT"
+      }
+    }
+  },
+```
+
+However, Since Claude Desktop supports only stdio, you need to bridge the command.
+
+```text
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://api.githubcopilot.com/mcp/",
+        "--header",
+        "Authorization: Bearer ${GITHUB_PAT}"
+      ],
+      "env": {
+        "GITHUB_PAT": "YOUR_GITHUB_PAT"
+      }
+    }
+  },
+```
+
+### With Local Docker
+
+More secure and you can control the toolsets you want.
+
+```text
+  "mcpServers": {
     "github": {
       "command": "docker",
       "args": [
