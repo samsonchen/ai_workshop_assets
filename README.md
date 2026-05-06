@@ -133,7 +133,7 @@ ssh-add ~/.ssh/{key_name}
 
 ### All Cloud-Based Claude Code Solution
 
-1. Install [Claude GitHub App](https://github.com/apps/claude) with correct repp permissions
+1. Install [Claude GitHub App](https://github.com/apps/claude) with correct repo permissions
 2. Connect the default GitHub Connector on Claude Desktop (Settings -> Connectors -> GitHub Integration on Web Connector)
 3. Design pages with claude.ai/design (Model Sonnet) (drop ```menu-design.md``` and go)
 4. Create a new repo
@@ -169,45 +169,10 @@ For Claude Code, this way is quicker but occupies more tokens to load all toolse
   },
 ```
 
-For **Claude Desktop MacOS**, Since Claude Desktop supports only stdio, you need to bridge the command.
+For **Claude Desktop MacOS/Windows**, use GitHub Integration.
 
-```text
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://api.githubcopilot.com/mcp/",
-        "--header",
-        "Authorization: Bearer ${GITHUB_PAT}"
-      ],
-      "env": {
-        "GITHUB_PAT": "YOUR_GITHUB_PAT"
-      }
-    }
-  },
-```
-
-Note: If you are using **Claude Desktop Windows**, your mcpServers setting would be:
-
-```text
-  "mcpServers": {
-    "github": {
-      "command": "npx.cmd",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://api.githubcopilot.com/mcp/",
-        "--header",
-        "Authorization: Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
-      ],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "YOUR_GITHUB_PAT"
-      }
-    }
-  },
-```
+1. Claude Desktop -> Settings -> Connectors -> GitHub Integration on Web Connector
+2. Install [Claude GitHub App](https://github.com/apps/claude) with correct repo permissions
 
 ### With Local Docker
 
