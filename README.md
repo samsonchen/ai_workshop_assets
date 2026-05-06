@@ -142,7 +142,7 @@ ssh-add ~/.ssh/{key_name}
 7. Using Claude Desktop -> Claude Code -> Choose "Default" -> Select repo with this new repo
 8. Ask Claude Code to read and understand issue #1 (Use Plan Mode and Model Sonnet), (e.g. 請讀取 issue #1 並且了解裡面的內容與規格.)
 9. Ask Claude Code to implment the Claude Design handoff packs based on the front-end specifications (Use Accept edits mode) (e.g. 請基於你先前的了解將底下的設計稿依照 issue #1 的規格設計出來: {Claude Design handOff information})
-10. Create PR
+10. Create PR (If error happens, ask Claude Code to do it, e.g. 請產生 PR)
 11. Merge PR
 
 ### Personal access tokens (PAT)
