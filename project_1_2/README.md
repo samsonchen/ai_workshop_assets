@@ -19,10 +19,11 @@
 graph LR
     U(["👤 使用者"])
 
-    U -->|"① Google Maps URL\n+ 照片上傳 GitHub"| P1
+    U -->|"① Google Maps URL"| P1
+    U -->|"② 照片直接上傳"| GH[("☁️ GitHub")]
 
     subgraph P1["Prompt 1 ── Claude Code"]
-        P1X["📋 收集店家資料\n🖼️ 同步照片\n📖 菜單 OCR"]
+        P1X["📋 收集店家資料\n📖 菜單 OCR\n🗂️ 產生 JSON"]
     end
 
     subgraph P2["Prompt 2 ── Claude Design"]
@@ -35,10 +36,10 @@ graph LR
 
     OUT["🌐 店家網站上線\ngithub.io/your-restaurant\n✅ 電腦　✅ iPhone 13+"]
 
-    P1 -->|"push 資料\n與照片"| GH[("☁️ GitHub")]
-    GH -->|"讀取\nRepo"| P2
+    P1 -->|"push 資料"| GH
+    GH -->|"讀取 Repo"| P2
     P2 -->|"Handoff"| P3
-    P3 -->|"push\n完整網站"| GH
+    P3 -->|"push 完整網站"| GH
     GH -->|"自動部署"| OUT
 
     classDef user fill:#fff8e1,stroke:#f9a825,stroke-width:2px
