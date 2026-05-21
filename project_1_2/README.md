@@ -17,20 +17,21 @@
 graph TD
     %% ===== 外部資料 =====
     GM["🗺️ Google Maps URL"]
-    UP["📸 使用者上傳照片\n店面 / 環境 / 品項 / 菜單"]
+    UP["📸 使用者照片\n店面 / 環境 / 品項 / 菜單"]
+
+    %% ===== GITHUB =====
+    GH[("☁️ GitHub Repo\nmain branch")]
 
     %% ===== PHASE 1 =====
     subgraph P1["Prompt 1 ── Claude Code Desktop"]
         P1A["Web Fetch 抓取\nGoogle Maps 公開資料"]
         P1B{"資料完整？"}
         P1C["互動式向 User\n補齊缺漏欄位"]
-        P1D["照片分類存入\nimages/ 資料夾"]
+        P1D["git pull\n同步照片到本機"]
         P1E["菜單照片 OCR\n輸出 menu.json"]
         P1F["產生 restaurant.json\n+ DESIGN_BRIEF.md"]
+        P1G["git push\n資料與設計說明"]
     end
-
-    %% ===== GITHUB =====
-    GH[("☁️ GitHub Repo\nmain branch")]
 
     %% ===== PHASE 2 =====
     subgraph P2["Prompt 2 ── Claude Design"]
@@ -46,7 +47,7 @@ graph TD
         P3B["補完動態功能\nfetch JSON / 地圖 embed / 輪播"]
         P3C["響應式檢查\n390px / 768px / 1280px"]
         P3D["建立 GitHub Actions\ndeploy.yml"]
-        P3E["Push 所有檔案"]
+        P3E["git push\n完整網站"]
         P3F["引導 User 開啟\nGitHub Pages"]
     end
 
@@ -55,16 +56,18 @@ graph TD
 
     %% ===== 連線 =====
     GM --> P1A
-    UP --> P1D
+    UP -->|"直接上傳到\nGitHub images/"| GH
 
     P1A --> P1B
     P1B -->|"有缺漏"| P1C
     P1C --> P1B
     P1B -->|"完整"| P1D
+
+    GH -->|"git pull"| P1D
     P1D --> P1E
     P1E --> P1F
-
-    P1F -->|"git push"| GH
+    P1F --> P1G
+    P1G -->|"git push"| GH
 
     GH -->|"讀取 restaurant.json\nimages/ DESIGN_BRIEF.md"| P2A
     P2A --> P2B
@@ -77,9 +80,9 @@ graph TD
     P3C --> P3D
     P3D --> P3E
     P3E -->|"git push"| GH
+    P3E --> P3F
     P3F -->|"設定 GitHub Pages\nSource: GitHub Actions"| GH
 
-    P3E --> P3F
     GH -->|"GitHub Actions 自動部署"| OUT
 
     %% ===== 樣式 =====
@@ -96,15 +99,27 @@ graph TD
 
 | 顏色 | 代表 |
 |------|------|
-| 黃色 | 外部輸入（Google Maps URL、使用者上傳照片） |
+| 黃色 | 外部輸入（Google Maps URL、使用者照片） |
 | 綠色 | GitHub Repo（三個階段的唯一交接媒介） |
 | 藍色 | 最終成果（GitHub Pages 網站） |
 | 灰色 | 各階段的處理步驟 |
+
+## 照片上傳說明
+
+使用者照片**直接上傳到 GitHub Repo 的 `images/` 目錄**，
+不經過 Claude Code 對話。Claude Code 在第四步執行 `git pull` 同步後才讀取照片。
+
+| 資料夾 | 用途 |
+|--------|------|
+| `images/exterior/` | 店面外觀照 |
+| `images/interior/` | 室內環境照 |
+| `images/dishes/` | 招牌品項照 |
+| `images/menu/` | 菜單照片（供 OCR 辨識） |
 
 ## 階段說明
 
 | 階段 | 工具 | 主要任務 |
 |------|------|---------|
-| Prompt 1 | Claude Code Desktop | 資料收集、照片處理、菜單 OCR、push 到 GitHub |
+| Prompt 1 | Claude Code Desktop | 資料收集、git pull 同步照片、菜單 OCR、push 到 GitHub |
 | Prompt 2 | Claude Design | 讀取 Repo、設計網站、Handoff to Claude Code |
 | Prompt 3 | Claude Code Desktop | 整合設計稿、補完功能、響應式檢查、部署上線 |
