@@ -13,6 +13,45 @@
 
 ## 網站產生器流程
 
+### 簡版流程圖
+
+```mermaid
+graph LR
+    U(["👤 使用者"])
+
+    U -->|"① Google Maps URL\n+ 照片上傳 GitHub"| P1
+
+    subgraph P1["Prompt 1 ── Claude Code"]
+        P1X["📋 收集店家資料\n🖼️ 同步照片\n📖 菜單 OCR"]
+    end
+
+    subgraph P2["Prompt 2 ── Claude Design"]
+        P2X["🎨 設計網站外觀\n產生 index.html"]
+    end
+
+    subgraph P3["Prompt 3 ── Claude Code"]
+        P3X["⚙️ 補完功能\n📱 響應式確認\n🚀 部署上線"]
+    end
+
+    OUT["🌐 店家網站上線\ngithub.io/your-restaurant\n✅ 電腦　✅ iPhone 13+"]
+
+    P1 -->|"push 資料\n與照片"| GH[("☁️ GitHub")]
+    GH -->|"讀取\nRepo"| P2
+    P2 -->|"Handoff"| P3
+    P3 -->|"push\n完整網站"| GH
+    GH -->|"自動部署"| OUT
+
+    classDef user fill:#fff8e1,stroke:#f9a825,stroke-width:2px
+    classDef github fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    classDef output fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+
+    class U user
+    class GH github
+    class OUT output
+```
+
+### 細部分解
+
 ```mermaid
 graph TD
     %% ===== 外部資料 =====
