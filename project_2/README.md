@@ -26,7 +26,7 @@ please implement @documents/07-frontend-design.md in @webui/ . The design file i
 
 ### Additional Prompts
 
-1. What is the configuration to make webui can be loaded from GitHub pages? How bout the GitHub Actions? 
+1. What is the configuration to make webui can be loaded from GitHub pages? How about the GitHub Actions? 
 2. Work with Claude Code with images if still not working.
 
 ## Prompts for Back-End
