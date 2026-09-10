@@ -1,9 +1,9 @@
 # Setup — MacOS
 
-> Software 與 Cloud Service 清單見 [[Software_and_Cloud_Service_List.md]]
-> Windows 版見 [[Setup_Windows.md]]
+> Software 與 Cloud Service 清單見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md)
+> Windows 版見 [Setup_Windows.md](Setup_Windows.md)
 
-這份文件涵蓋總表上**與作業系統有關**的安裝步驟。帳號申請、訂閱、Claude GitHub App 等與作業系統無關的項目，見 [[Software_and_Cloud_Service_List.md]]，請先做完那一份再開始這裡。
+這份文件涵蓋總表上**與作業系統有關**的安裝步驟。帳號申請、訂閱、Claude GitHub App 等與作業系統無關的項目，見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md)，請先做完那一份再開始這裡。
 
 ## 1. 基本工具
 Xcode CLI
@@ -42,11 +42,19 @@ brew install --cask --adopt sourcetree
 ### `--adopt` 在做什麼
 `/Applications` 裡已經有同名 App 時，不加這個參數 brew 會直接停下來報 `It seems there is already an App at ...`。加了它，brew 會把現有那份接管成自己管理的，不覆蓋、不動你的設定與擴充套件。沒裝過的人加了也沒有副作用。
 
-**即使是 adopt，brew 還是會先完整下載一次安裝檔**，所以你會看到幾百 MB 的下載進度。那是 brew 的固定流程，不代表它在覆蓋你的 App。看輸出裡有沒有這一行就知道(底下舉例)：
+**即使是 adopt，brew 還是會先完整下載一次安裝檔**，所以你會看到幾百 MB 的下載進度。那是 brew 的固定流程，不代表它在覆蓋你的 App。看輸出裡有沒有這一行就知道：
 ```
 ==> Adopting existing App at '/Applications/Visual Studio Code.app'
 ```
-有這行就是改用 brew 管理，不是重裝。
+有這行就是接管，不是重裝。
+
+想確認的話：
+```
+brew list --cask
+ls -la /Applications/Visual\ Studio\ Code.app
+```
+前者要列得出該 App，後者的目錄時間應該還是你當初安裝的日期，不是今天。
+
 adopt 過程中 brew 有時會順手把 CLI 指令連到 PATH（例如 VS Code 的 `code`、`code-tunnel`），這是附帶的好處，原本要在 App 裡手動設定。
 
 ### 之後的更新
@@ -56,7 +64,7 @@ adopt 過程中 brew 有時會順手把 CLI 指令連到 PATH（例如 VS Code �
 ```
 claude --version
 ```
-不想用 brew 的可以到各自官網下載安裝檔，見 [[Software_and_Cloud_Service_List.md]] 的連結。
+不想用 brew 的可以到各自官網下載安裝檔，見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md) 的連結。
 
 ## 3. Chrome Extensions
 裝好 Chrome 後手動加：
@@ -127,8 +135,12 @@ uv tool install "notebooklm-py[browser]"
 # 或
 pipx install "notebooklm-py[browser]"
 ```
-需安裝 Chromium 瀏覽器
+不論用哪一種裝法，都要再下載 Chromium 瀏覽器本體：
 ```
-# pip 安裝者
 playwright install chromium
 ```
+確認指令跑得起來：
+```
+notebooklm --version
+```
+印得出版本才算成功。

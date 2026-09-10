@@ -1,9 +1,9 @@
 # Setup — Windows
 
-> Software 與 Cloud Service 清單見 [[Software_and_Cloud_Service_List.md]]
-> MacOS 版見 [[Setup_MacOS.md]]
+> Software 與 Cloud Service 清單見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md)
+> MacOS 版見 [Setup_MacOS.md](Setup_MacOS.md)
 
-這份文件涵蓋總表上**與作業系統有關**的安裝步驟。帳號申請、訂閱、Claude GitHub App 等與作業系統無關的項目，見 [[Software_and_Cloud_Service_List.md]]，請先做完那一份再開始這裡。
+這份文件涵蓋總表上**與作業系統有關**的安裝步驟。帳號申請、訂閱、Claude GitHub App 等與作業系統無關的項目，見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md)，請先做完那一份再開始這裡。
 
 Windows 沒有 Homebrew，用 **winget** 裝 GUI 程式與大部分 CLI。以下指令都在 **PowerShell** 執行。先裝 [Windows Terminal](https://aka.ms/terminal)。
 
@@ -41,7 +41,7 @@ winget install --id Obsidian.Obsidian
 winget install --id Discord.Discord
 winget install --id Atlassian.Sourcetree
 ```
-不想用 winget 的可以到各自官網下載安裝檔，見 [[Software_and_Cloud_Service_List.md]] 的連結。
+不想用 winget 的可以到各自官網下載安裝檔，見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md) 的連結。
 
 已經手動裝過的不用先移除。winget 靠「新增/移除程式」的記錄判斷，認得出來就會跳過（顯示 `Found an existing package already installed`），不會覆蓋也不會報錯。
 
@@ -87,17 +87,11 @@ npm i -g wrangler
 wrangler --version
 ```
 
-Supabase CLI — Windows 不支援 `npm install -g supabase`。裝在專案資料夾裡，用 `npx` 執行：
+Supabase CLI — Windows 不支援 `npm install -g supabase`，要裝在專案資料夾裡：
 ```powershell
 npm i supabase --save-dev
-npx supabase --version
 ```
-之後所有 supabase 指令前面都要加 `npx`，而且要在這個專案資料夾裡跑：
-```powershell
-npx supabase init
-npx supabase start
-```
-不加 `npx` 直接打 `supabase` 會找不到。
+這一步等課堂上建好專案再做。之後所有 supabase 指令前面都要加 `npx`，例如 `npx supabase --version`。
 
 ## 8. GitHub Shell Login
 先將 GitHub CLI、Git 與 SourceTree 安裝好才進行。
@@ -133,19 +127,30 @@ uv --version
 ```
 若第 1 步被擋下，先執行 `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`。
 
-Windows 商店版的 Python（打 `python` 會跳出 Microsoft Store 那個）會跟 pyenv-win 打架。到「設定 → 應用程式 → 應用程式執行別名」把 python.exe / python3.exe 的別名關掉。
+如果第 3 步的 `python --version` 印出來不是 3.12.7，代表 PATH 上有別的 Python 排在前面先被找到。跑 `where.exe python`，第一行要是 `...\.pyenv\pyenv-win\shims\python`；不是的話，把第一行那個 Python 從「新增/移除程式」移掉，重開 PowerShell 再試一次。
+
+Windows 商店版的 Python（打 `python` 會跳出 Microsoft Store 那個）也會擋路。到「設定 → 應用程式 → 應用程式執行別名」把 python.exe / python3.exe 的別名關掉。
+
+### 之後用 pip 裝東西要記得 rehash
+pyenv-win 是靠 shims 轉發指令的。用 pip 裝了帶 CLI 的套件之後，那支指令不會馬上能用，要先：
+```powershell
+pyenv rehash
+```
+沒 rehash 就會看到 `xxx is not recognized`，即使套件明明裝好了。以後每次 `pip install` 完都跑一次。
 
 ## 11. Notebooklm-py
-裝完 Python 才可以裝這個。notebooklm-py 是純 Python + Playwright，Windows 可以正常使用。
+裝完 Python 才可以裝這個。
 ```powershell
-py -m pip install "notebooklm-py[browser]"
-playwright install chromium
+python -m pip install "notebooklm-py[browser]"
+python -m playwright install chromium
 ```
-或用 uv：
+第二行是下載 Chromium 瀏覽器本體，不能跳過。
+
+裝完 rehash 一次，然後確認指令跑得起來：
 ```powershell
-uv tool install "notebooklm-py[browser]"
+pyenv rehash
+notebooklm --version
 ```
-與 macOS 的差別：
-- 用 `py -m pip install`，不要用 `pip install`
-- Windows 沒有 `externally-managed-environment` 問題，不需要 `--break-system-packages`
-- 設定檔位置為 `%USERPROFILE%\.notebooklm\`
+重開 PowerShell 後再試一次也可以。印得出版本才算成功。
+
+設定檔位置為 `%USERPROFILE%\.notebooklm\`。
