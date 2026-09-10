@@ -2,8 +2,8 @@
 
 與作業系統無關的部分（帳號、訂閱、社群、GitHub App、Connectors）全部在這一頁，**請先做完這一頁**，再依你的作業系統往下：
 
-- [[Setup_MacOS.md|MacOS Setup]]
-- [[Setup_Windows.md|Windows Setup]]
+- [MacOS Setup](Setup_MacOS.md)
+- [Windows Setup](Setup_Windows.md)
 
 ---
 
