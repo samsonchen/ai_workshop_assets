@@ -43,6 +43,16 @@ winget install --id Atlassian.Sourcetree
 ```
 不想用 winget 的可以到各自官網下載安裝檔，見 [[Software_and_Cloud_Service_List.md]] 的連結。
 
+已經手動裝過的不用先移除。winget 靠「新增/移除程式」的記錄判斷，認得出來就會跳過（顯示 `Found an existing package already installed`），不會覆蓋也不會報錯。
+
+有兩種情況會變成裝了兩份：手動裝的 installer 類型跟 winget package 不同（例如 MSIX 對 exe），或是一份裝在使用者層、一份在系統層。要指定層級可以加 `--scope user` 或 `--scope machine`。
+
+全部裝完掃一次有沒有重複：
+```powershell
+winget list
+```
+真的重複了就從「新增/移除程式」移掉不要的那份，或 `winget uninstall --id <ID>`。
+
 ## 4. Claude Code
 PowerShell：
 ```powershell

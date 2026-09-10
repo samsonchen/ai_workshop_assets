@@ -28,15 +28,20 @@ npm --version
 ```
 
 ## 2. 應用程式
+(如果已經安裝過部份套件，下列動作不會再裝第二次，也不需要改用此種方法安裝)
 ```
-brew install --cask claude
-brew install --cask claude-code
-brew install --cask visual-studio-code
-brew install --cask google-chrome
-brew install --cask obsidian
-brew install --cask discord
-brew install --cask sourcetree
+brew install --cask --adopt claude
+brew install --cask --adopt claude-code
+brew install --cask --adopt visual-studio-code
+brew install --cask --adopt google-chrome
+brew install --cask --adopt obsidian
+brew install --cask --adopt discord
+brew install --cask --adopt sourcetree
 ```
+`--adopt` 是給已經手動裝過的人用的。`/Applications` 裡已經有同名 App 時，不加這個參數 brew 會直接停下來報 `It seems there is already an App at ...`；加了它會把現有那份接管成 brew 管理，不覆蓋、不動你的設定。沒裝過的人加了也沒有副作用。
+
+裝完之後 App 內建的自動更新會跟 brew 各管各的：App 自己升級後 brew 記錄的版本會落後，`brew upgrade` 可能報錯或想把它降回去。不想處理的話，讓 App 用自己的自動更新就好，不要對這些 cask 跑 `brew upgrade`。
+
 確認 Claude Code：
 ```
 claude --version
