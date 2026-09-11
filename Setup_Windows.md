@@ -76,6 +76,7 @@ VS Code 內建終端機若遇到 Claude Code 啟動後沒反應，改用獨立�
 - [ ] [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf)
 
 ## 6. Obsidian Plugins
+(Obsidian Plugin 要在有 Vault 下才能安裝，如果還沒有可先跳過。)
 Obsidian → 設定 → 第三方外掛 → 瀏覽，搜尋安裝：
 - [ ] Claudian
 - [ ] Mermaid Flow
@@ -153,4 +154,4 @@ notebooklm --version
 ```
 重開 PowerShell 後再試一次也可以。印得出版本才算成功。
 
-設定檔位置為 `%USERPROFILE%\.notebooklm\`。
+設定檔位置為 `$HOME\.notebooklm\`。
