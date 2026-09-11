@@ -72,6 +72,7 @@ claude --version
 - [ ] [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf)
 
 ## 4. Obsidian Plugins
+(Obsidian Plugin 要在有 Vault 下才能安裝，如果還沒有可先跳過。)
 Obsidian → 設定 → 第三方外掛 → 瀏覽，搜尋安裝：
 - [ ] Claudian
 - [ ] Mermaid Flow
@@ -129,15 +130,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ```bash
 pip install "notebooklm-py[browser]"
 ```
-如果遇到 `externally-managed-environment` 錯誤（macOS Homebrew / Linux 常見），官方 skill 不建議用 `--break-system-packages`，改用：
+如果遇到 `externally-managed-environment` 錯誤（macOS Homebrew / Linux 常見），改用：
 ```bash
 uv tool install "notebooklm-py[browser]"
 # 或
 pipx install "notebooklm-py[browser]"
-```
-不論用哪一種裝法，都要再下載 Chromium 瀏覽器本體：
-```
-playwright install chromium
 ```
 確認指令跑得起來：
 ```
