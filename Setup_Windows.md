@@ -58,7 +58,7 @@ PowerShell：
 ```powershell
 irm https://claude.ai/install.ps1 | iex
 ```
-CMD：
+CMD：(此為參考，原則上請儘量都用 PowerShell 來作業。)
 ```
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
@@ -67,8 +67,6 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 claude --version
 ```
 不需要系統管理員權限，也不需要 WSL。Git for Windows 建議先裝好，Claude Code 會用 Git Bash 當 Bash tool；沒裝的話會改用 PowerShell 當 shell。
-
-VS Code 內建終端機若遇到 Claude Code 啟動後沒反應，改用獨立的 Windows Terminal 或 PowerShell。
 
 ## 5. Chrome Extensions
 裝好 Chrome 後手動加：
