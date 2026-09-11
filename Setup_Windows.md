@@ -78,6 +78,8 @@ claude --version
 Obsidian → 設定 → 第三方外掛 → 瀏覽，搜尋安裝：
 - [ ] Claudian
 - [ ] Mermaid Flow
+- [ ] Mermaid Zoom
+- [ ] Spaced Repetition
 
 ## 7. Cloud Service CLI
 Wrangler CLI
