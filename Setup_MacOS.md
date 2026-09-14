@@ -94,10 +94,8 @@ gh auth setup-git
 ```
 `gh auth login` 選項建議：GitHub.com → HTTPS → 用 gh 認證 Git → 瀏覽器登入。
 
-## 7. Claude Desktop Connectors
-Claude Desktop → Customize → Connectors，確認以下已整合：
-- [ ] GitHub Integration
-- [ ] Claude in Chrome
+## 7. GitHub Claude Application
+到 [GitHub Claude Application](https://github.com/apps/claude)，點 Configure 就可以了。
 
 ## 8. Deactivate Conda base
 如果你有使用 conda，請不要自動啟動 base。如果你沒有使用 conda，請跳過此段。

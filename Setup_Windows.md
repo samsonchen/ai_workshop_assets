@@ -31,7 +31,10 @@ node --version
 npm --version
 gh --version
 ```
-
+如果 npm 無法執行，需設定權限：
+```
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 ## 3. 應用程式
 ```powershell
 winget install --id Anthropic.Claude
@@ -58,15 +61,11 @@ PowerShell：
 ```powershell
 irm https://claude.ai/install.ps1 | iex
 ```
-CMD：(此為參考，原則上請儘量都用 PowerShell 來作業。)
-```
-curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
-```
-裝完**重開終端機**再執行：
+
+請注意看安裝過程的訊息，有可能需要編輯系統設定的環境變數 (environment variables) 裡面的 Path 項目。裝完**重開終端機**再執行：
 ```powershell
 claude --version
 ```
-不需要系統管理員權限，也不需要 WSL。Git for Windows 建議先裝好，Claude Code 會用 Git Bash 當 Bash tool；沒裝的話會改用 PowerShell 當 shell。
 
 ## 5. Chrome Extensions
 裝好 Chrome 後手動加：
@@ -97,10 +96,8 @@ gh auth setup-git
 ```
 `gh auth login` 選項建議：GitHub.com → HTTPS → 用 gh 認證 Git → 瀏覽器登入。
 
-## 9. Claude Desktop Connectors
-Claude Desktop → Customize → Connectors，確認以下已整合：
-- [ ] GitHub Integration
-- [ ] Claude in Chrome
+## 9. GitHub Claude Application
+到 [GitHub Claude Application](https://github.com/apps/claude)，點 Configure 就可以了。
 
 ## 10. Python
 ```powershell
