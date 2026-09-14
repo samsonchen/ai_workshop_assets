@@ -7,35 +7,58 @@
 
 ## 1. 基本工具
 Xcode CLI
-```
+```bash
 xcode-select --install
 ```
+
 Homebrew
-```
+```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
+
 Git、Node.js、GitHub CLI
-```
+```bash
 brew install git
+```
+```bash
 brew install node
+```
+```bash
 brew install gh
 ```
+
 確認：
-```
+```bash
 git --version
+```
+```bash
 node --version
+```
+```bash
 npm --version
 ```
 
 ## 2. 應用程式
 已經手動裝過其中幾個的人不用先移除，也不用挑著跳過，整段照跑就好。
-```
+```bash
 brew install --cask --adopt claude
+```
+```bash
 brew install --cask --adopt claude-code
+```
+```bash
 brew install --cask --adopt visual-studio-code
+```
+```bash
 brew install --cask --adopt google-chrome
+```
+```bash
 brew install --cask --adopt obsidian
+```
+```bash
 brew install --cask --adopt discord
+```
+```bash
 brew install --cask --adopt sourcetree
 ```
 
@@ -49,8 +72,10 @@ brew install --cask --adopt sourcetree
 有這行就是接管，不是重裝。
 
 想確認的話：
-```
+```bash
 brew list --cask
+```
+```bash
 ls -la /Applications/Visual\ Studio\ Code.app
 ```
 前者要列得出該 App，後者的目錄時間應該還是你當初安裝的日期，不是今天。
@@ -61,7 +86,7 @@ adopt 過程中 brew 有時會順手把 CLI 指令連到 PATH（例如 VS Code �
 這些 App 大多有內建自動更新，會跟 brew 各管各的：App 自己升級後 brew 記錄的版本會落後，`brew upgrade` 可能報錯或想把它降回去。不想處理的話，讓 App 用自己的自動更新就好，不要對這些 cask 跑 `brew upgrade`。
 
 確認 Claude Code：
-```
+```bash
 claude --version
 ```
 不想用 brew 的可以到各自官網下載安裝檔，見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md) 的連結。
@@ -76,20 +101,27 @@ Obsidian Plugin 要在有 Vault 下才能安裝，這裡先跳過，待課堂上
 
 ## 5. Cloud Service CLI
 Wrangler CLI
-```
+```bash
 npm i -g wrangler
+```
+```bash
 wrangler --version
 ```
+
 Supabase CLI
-```
+```bash
 brew install supabase/tap/supabase
+```
+```bash
 supabase --version
 ```
 
 ## 6. GitHub Shell Login
 先將 GitHub CLI、Git 與 SourceTree 安裝好才進行。
-```
+```bash
 gh auth login
+```
+```bash
 gh auth setup-git
 ```
 `gh auth login` 選項建議：GitHub.com → HTTPS → 用 gh 認證 Git → 瀏覽器登入。
@@ -99,24 +131,34 @@ gh auth setup-git
 
 ## 8. Deactivate Conda base
 如果你有使用 conda，請不要自動啟動 base。如果你沒有使用 conda，請跳過此段。
-```
+```bash
 conda config --set auto_activate_base false
 ```
 
 ## 9. Python
-```
-# 1. pyenv (Python version manager)
+1. pyenv (Python version manager)
+```bash
 brew install pyenv
+```
 
-# 2. Shell integration — add to ~/.zshrc (or ~/.bashrc)
+2. Shell integration — 加到 `~/.zshrc`（或 `~/.bashrc`）
+```bash
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+```
+```bash
 source ~/.zshrc
+```
 
-# 3. Install a Python version
+3. Install a Python version
+```bash
 pyenv install 3.12.7
+```
+```bash
 pyenv global 3.12.7
+```
 
-# 4. uv (package/env manager)
+4. uv (package/env manager)
+```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
@@ -128,11 +170,13 @@ pip install "notebooklm-py[browser]"
 如果遇到 `externally-managed-environment` 錯誤（macOS Homebrew / Linux 常見），改用：
 ```bash
 uv tool install "notebooklm-py[browser]"
-# 或
+```
+或
+```bash
 pipx install "notebooklm-py[browser]"
 ```
 確認指令跑得起來：
-```
+```bash
 notebooklm --version
 ```
 印得出版本才算成功。

@@ -21,27 +21,50 @@ winget --version
 ## 2. 基本工具
 ```powershell
 winget install --id Git.Git
+```
+```powershell
 winget install --id OpenJS.NodeJS.LTS
+```
+```powershell
 winget install --id GitHub.cli
 ```
+
 裝完重開 PowerShell，確認：
 ```powershell
 git --version
+```
+```powershell
 node --version
+```
+```powershell
 npm --version
+```
+```powershell
 gh --version
 ```
+
 如果 npm 無法執行，需設定權限：
-```
+```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
+
 ## 3. 應用程式
 ```powershell
 winget install --id Anthropic.Claude
+```
+```powershell
 winget install --id Microsoft.VisualStudioCode
+```
+```powershell
 winget install --id Google.Chrome
+```
+```powershell
 winget install --id Obsidian.Obsidian
+```
+```powershell
 winget install --id Discord.Discord
+```
+```powershell
 winget install --id Atlassian.Sourcetree
 ```
 不想用 winget 的可以到各自官網下載安裝檔，見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md) 的連結。
@@ -79,6 +102,8 @@ Obsidian Plugin 要在有 Vault 下才能安裝，這裡先跳過，待課堂上
 Wrangler CLI
 ```powershell
 npm i -g wrangler
+```
+```powershell
 wrangler --version
 ```
 
@@ -92,6 +117,8 @@ npm i supabase --save-dev
 先將 GitHub CLI、Git 與 SourceTree 安裝好才進行。
 ```powershell
 gh auth login
+```
+```powershell
 gh auth setup-git
 ```
 `gh auth login` 選項建議：GitHub.com → HTTPS → 用 gh 認證 Git → 瀏覽器登入。
@@ -100,27 +127,47 @@ gh auth setup-git
 到 [GitHub Claude Application](https://github.com/apps/claude)，點 Configure 就可以了。
 
 ## 10. Python
+1. pyenv-win (PowerShell)
 ```powershell
-# 1. pyenv-win (PowerShell)
 Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+```
 
-# 2. 關掉 PowerShell，重開一個新的，然後確認
+2. 關掉 PowerShell，重開一個新的，然後確認
+```powershell
 pyenv --version
+```
 
-# 3. Install a Python version
+3. Install a Python version
+```powershell
 pyenv install 3.12.7
+```
+```powershell
 pyenv global 3.12.7
+```
+```powershell
 python --version
+```
 
-# 4. uv (package/env manager)
+4. uv (package/env manager)
+```powershell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
 
-# 5. 再重開一次 PowerShell
+5. 再重開一次 PowerShell
+```powershell
 uv --version
 ```
-若第 1 步被擋下，先執行 `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`。
 
-如果第 3 步的 `python --version` 印出來不是 3.12.7，代表 PATH 上有別的 Python 排在前面先被找到。跑 `where.exe python`，第一行要是 `...\.pyenv\pyenv-win\shims\python`；不是的話，把第一行那個 Python 從「新增/移除程式」移掉，重開 PowerShell 再試一次。
+若第 1 步被擋下，先執行：
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+如果第 3 步的 `python --version` 印出來不是 3.12.7，代表 PATH 上有別的 Python 排在前面先被找到。跑：
+```powershell
+where.exe python
+```
+第一行要是 `...\.pyenv\pyenv-win\shims\python`；不是的話，把第一行那個 Python 從「新增/移除程式」移掉，重開 PowerShell 再試一次。
 
 Windows 商店版的 Python（打 `python` 會跳出 Microsoft Store 那個）也會擋路。到「設定 → 應用程式 → 應用程式執行別名」把 python.exe / python3.exe 的別名關掉。
 
@@ -135,6 +182,8 @@ pyenv rehash
 裝完 Python 才可以裝這個。
 ```powershell
 python -m pip install "notebooklm-py[browser]"
+```
+```powershell
 python -m playwright install chromium
 ```
 第二行是下載 Chromium 瀏覽器本體，不能跳過。
@@ -142,6 +191,8 @@ python -m playwright install chromium
 裝完 rehash 一次，然後確認指令跑得起來：
 ```powershell
 pyenv rehash
+```
+```powershell
 notebooklm --version
 ```
 重開 PowerShell 後再試一次也可以。印得出版本才算成功。
