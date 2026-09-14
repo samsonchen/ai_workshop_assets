@@ -72,12 +72,7 @@ claude --version
 - [ ] [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf)
 
 ## 4. Obsidian Plugins
-(Obsidian Plugin 要在有 Vault 下才能安裝，如果還沒有可先跳過。)
-Obsidian → 設定 → 第三方外掛 → 瀏覽，搜尋安裝：
-- [ ] Claudian
-- [ ] Mermaid Flow
-- [ ] Mermaid Zoom
-- [ ] Spaced Repetition
+Obsidian Plugin 要在有 Vault 下才能安裝，這裡先跳過，待課堂上再安裝。
 
 ## 5. Cloud Service CLI
 Wrangler CLI
