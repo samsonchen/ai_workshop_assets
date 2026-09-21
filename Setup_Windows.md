@@ -131,14 +131,22 @@ gh auth setup-git
 ```powershell
 winget install --id astral-sh.uv
 ```
-裝完重開 PowerShell。
+裝完重開 PowerShell，然後確認：
+```powershell
+uv --version
+```
+```powershell
+uvx --version
+```
+`uvx` 是跟著 uv 一起裝的，兩個都要印得出版本。
 
 2. 裝 Python
 ```powershell
-uv python install 3.12
+uv python install --preview-features python-install-default --default 3.12
 ```
+`--default` 不能省，沒有它只會裝出 `python3.12`，不會有 `python`。
 
-3. 讓 `python` 指到剛裝的那一版
+3. 把 uv 的指令加進 PATH
 ```powershell
 uv python update-shell
 ```
@@ -150,7 +158,11 @@ python --version
 ```
 印得出 `Python 3.12.x` 就可以了。
 
-如果印出來的不是 3.12，代表 PATH 上有別的 Python 排在前面。最常見的是 Windows 商店版：到「設定 → 應用程式 → 應用程式執行別名」，把 python.exe 和 python3.exe 的別名關掉，重開 PowerShell 再試一次。
+如果印出來的不是 3.12，先看它指到哪：
+```powershell
+where.exe python
+```
+第一行要是 `...\.local\bin\python.exe`。指到 `WindowsApps` 的話，到「設定 → 應用程式 → 應用程式執行別名」把 python.exe 和 python3.exe 的別名關掉，重開 PowerShell 再試一次。
 
 ## 11. Notebooklm-py
 裝完 Python 才可以裝這個。

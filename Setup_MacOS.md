@@ -39,7 +39,7 @@ npm --version
 ```
 
 ## 2. 應用程式
-已經手動裝過其中幾個的人不用先移除，也不用挑著跳過，整段照跑就好。
+已經手動裝過其中幾個的人不用先移除，也不用挑著跳過，整段照跑就好。`--adopt` 會把現有的 App 接管過來，不覆蓋你的設定。
 ```bash
 brew install --cask --adopt claude
 ```
@@ -61,29 +61,6 @@ brew install --cask --adopt discord
 ```bash
 brew install --cask --adopt sourcetree
 ```
-
-### `--adopt` 在做什麼
-`/Applications` 裡已經有同名 App 時，不加這個參數 brew 會直接停下來報 `It seems there is already an App at ...`。加了它，brew 會把現有那份接管成自己管理的，不覆蓋、不動你的設定與擴充套件。沒裝過的人加了也沒有副作用。
-
-**即使是 adopt，brew 還是會先完整下載一次安裝檔**，所以你會看到幾百 MB 的下載進度。那是 brew 的固定流程，不代表它在覆蓋你的 App。看輸出裡有沒有這一行就知道：
-```
-==> Adopting existing App at '/Applications/Visual Studio Code.app'
-```
-有這行就是接管，不是重裝。
-
-想確認的話：
-```bash
-brew list --cask
-```
-```bash
-ls -la /Applications/Visual\ Studio\ Code.app
-```
-前者要列得出該 App，後者的目錄時間應該還是你當初安裝的日期，不是今天。
-
-adopt 過程中 brew 有時會順手把 CLI 指令連到 PATH（例如 VS Code 的 `code`、`code-tunnel`），這是附帶的好處，原本要在 App 裡手動設定。
-
-### 之後的更新
-這些 App 大多有內建自動更新，會跟 brew 各管各的：App 自己升級後 brew 記錄的版本會落後，`brew upgrade` 可能報錯或想把它降回去。不想處理的話，讓 App 用自己的自動更新就好，不要對這些 cask 跑 `brew upgrade`。
 
 確認 Claude Code：
 ```bash
@@ -140,15 +117,23 @@ conda config --set auto_activate_base false
 ```bash
 brew install uv
 ```
+```bash
+uv --version
+```
+```bash
+uvx --version
+```
+`uvx` 是跟著 uv 一起裝的，兩個都要印得出版本。
 
 2. 裝 Python
 ```bash
-uv python install 3.12
+uv python install --preview-features python-install-default --default 3.12
 ```
+`--default` 不能省，沒有它只會裝出 `python3.12`，不會有 `python` 和 `python3`。
 
-3. 讓 `python3` 指到剛裝的那一版
+3. 把 uv 的指令放到 PATH 最前面
 ```bash
-uv python update-shell
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 ```
 ```bash
 exec zsh
@@ -156,9 +141,18 @@ exec zsh
 
 4. 確認
 ```bash
+python --version
+```
+```bash
 python3 --version
 ```
-印得出 `Python 3.12.x` 就可以了。
+兩行都要印出 `Python 3.12.x`。
+
+如果印出來的不是 3.12，先看它指到哪：
+```bash
+which python3
+```
+要是 `/Users/<你的帳號>/.local/bin/python3`。不是的話，檢查 `~/.zshrc` 最後一行有沒有第 3 步那段 `export PATH`，然後重開終端機。
 
 ## 10. Notebooklm-py
 裝完 Python 才可以裝這個。
