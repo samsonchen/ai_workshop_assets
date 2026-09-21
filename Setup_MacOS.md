@@ -66,8 +66,6 @@ brew install --cask --adopt sourcetree
 ```bash
 claude --version
 ```
-不想用 brew 的可以到各自官網下載安裝檔，見 [Software_and_Cloud_Service_List.md](Software_and_Cloud_Service_List.md) 的連結。
-
 ## 3. Chrome Extensions
 裝好 Chrome 後手動加：
 - [ ] [Claude in Chrome](https://claude.com/claude-in-chrome)
@@ -107,7 +105,7 @@ gh auth setup-git
 到 [GitHub Claude Application](https://github.com/apps/claude)，點 Configure 就可以了。
 
 ## 8. Deactivate Conda base
-如果你有使用 conda，請不要自動啟動 base。如果你沒有使用 conda，請跳過此段。
+有用 conda 的人跑這行，沒用的跳過。
 ```bash
 conda config --set auto_activate_base false
 ```
@@ -123,7 +121,7 @@ uv --version
 ```bash
 uvx --version
 ```
-`uvx` 是跟著 uv 一起裝的，兩個都要印得出版本。
+兩個都要印得出版本。
 
 2. 裝 Python
 ```bash
@@ -168,5 +166,3 @@ uv tool run --from "notebooklm-py[browser]" playwright install chromium
 notebooklm --version
 ```
 印得出版本才算成功。
-
-這裡不要用 `pip install`，會裝錯地方。

@@ -138,7 +138,7 @@ uv --version
 ```powershell
 uvx --version
 ```
-`uvx` 是跟著 uv 一起裝的，兩個都要印得出版本。
+兩個都要印得出版本。
 
 2. 裝 Python
 ```powershell
