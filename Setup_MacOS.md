@@ -136,47 +136,43 @@ conda config --set auto_activate_base false
 ```
 
 ## 9. Python
-1. pyenv (Python version manager)
+1. uv（裝 Python，之後裝套件也用它）
 ```bash
-brew install pyenv
+brew install uv
 ```
 
-2. Shell integration — 加到 `~/.zshrc`（或 `~/.bashrc`）
+2. 裝 Python
 ```bash
-echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-```
-```bash
-source ~/.zshrc
+uv python install 3.12
 ```
 
-3. Install a Python version
+3. 讓 `python3` 指到剛裝的那一版
 ```bash
-pyenv install 3.12.7
+uv python update-shell
 ```
 ```bash
-pyenv global 3.12.7
+exec zsh
 ```
 
-4. uv (package/env manager)
+4. 確認
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
+python3 --version
 ```
+印得出 `Python 3.12.x` 就可以了。
 
 ## 10. Notebooklm-py
 裝完 Python 才可以裝這個。
 ```bash
-pip install "notebooklm-py[browser]"
-```
-如果遇到 `externally-managed-environment` 錯誤（macOS Homebrew / Linux 常見），改用：
-```bash
 uv tool install "notebooklm-py[browser]"
 ```
-或
+再下載 Chromium 瀏覽器本體，這步不能跳過：
 ```bash
-pipx install "notebooklm-py[browser]"
+uv tool run --from "notebooklm-py[browser]" playwright install chromium
 ```
-確認指令跑得起來：
+確認：
 ```bash
 notebooklm --version
 ```
 印得出版本才算成功。
+
+這裡不要用 `pip install`，會裝錯地方。

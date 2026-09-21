@@ -7,7 +7,7 @@
 
 Windows 沒有 Homebrew，用 **winget** 裝 GUI 程式與大部分 CLI。以下指令都在 **PowerShell** 執行。先裝 [Windows Terminal](https://aka.ms/terminal)。
 
-> 每次安裝完會改到 PATH 的工具（Claude Code、pyenv、gh、node），**要關掉 PowerShell 再開一個新的**，指令才找得到。不重開就會看到 `xxx is not recognized`。
+> 每次安裝完會改到 PATH 的工具（Claude Code、uv、gh、node），**要關掉 PowerShell 再開一個新的**，指令才找得到。不重開就會看到 `xxx is not recognized`。
 
 整份流程不需要系統管理員權限。
 
@@ -127,74 +127,47 @@ gh auth setup-git
 到 [GitHub Claude Application](https://github.com/apps/claude)，點 Configure 就可以了。
 
 ## 10. Python
-1. pyenv-win (PowerShell)
+1. uv（裝 Python，之後裝套件也用它）
 ```powershell
-Invoke-WebRequest -UseBasicParsing -Uri "https://raw.githubusercontent.com/pyenv-win/pyenv-win/master/pyenv-win/install-pyenv-win.ps1" -OutFile "./install-pyenv-win.ps1"; &"./install-pyenv-win.ps1"
+winget install --id astral-sh.uv
+```
+裝完重開 PowerShell。
+
+2. 裝 Python
+```powershell
+uv python install 3.12
 ```
 
-2. 關掉 PowerShell，重開一個新的，然後確認
+3. 讓 `python` 指到剛裝的那一版
 ```powershell
-pyenv --version
+uv python update-shell
 ```
+再重開一次 PowerShell。
 
-3. Install a Python version
-```powershell
-pyenv install 3.12.7
-```
-```powershell
-pyenv global 3.12.7
-```
+4. 確認
 ```powershell
 python --version
 ```
+印得出 `Python 3.12.x` 就可以了。
 
-4. uv (package/env manager)
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-5. 再重開一次 PowerShell
-```powershell
-uv --version
-```
-
-若第 1 步被擋下，先執行：
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-如果第 3 步的 `python --version` 印出來不是 3.12.7，代表 PATH 上有別的 Python 排在前面先被找到。跑：
-```powershell
-where.exe python
-```
-第一行要是 `...\.pyenv\pyenv-win\shims\python`；不是的話，把第一行那個 Python 從「新增/移除程式」移掉，重開 PowerShell 再試一次。
-
-Windows 商店版的 Python（打 `python` 會跳出 Microsoft Store 那個）也會擋路。到「設定 → 應用程式 → 應用程式執行別名」把 python.exe / python3.exe 的別名關掉。
-
-### 之後用 pip 裝東西要記得 rehash
-pyenv-win 是靠 shims 轉發指令的。用 pip 裝了帶 CLI 的套件之後，那支指令不會馬上能用，要先：
-```powershell
-pyenv rehash
-```
-沒 rehash 就會看到 `xxx is not recognized`，即使套件明明裝好了。以後每次 `pip install` 完都跑一次。
+如果印出來的不是 3.12，代表 PATH 上有別的 Python 排在前面。最常見的是 Windows 商店版：到「設定 → 應用程式 → 應用程式執行別名」，把 python.exe 和 python3.exe 的別名關掉，重開 PowerShell 再試一次。
 
 ## 11. Notebooklm-py
 裝完 Python 才可以裝這個。
 ```powershell
-python -m pip install "notebooklm-py[browser]"
+uv tool install "notebooklm-py[browser]"
 ```
 ```powershell
-python -m playwright install chromium
+uv tool update-shell
 ```
-第二行是下載 Chromium 瀏覽器本體，不能跳過。
-
-裝完 rehash 一次，然後確認指令跑得起來：
+重開 PowerShell，再下載 Chromium 瀏覽器本體，這步不能跳過：
 ```powershell
-pyenv rehash
+uv tool run --from "notebooklm-py[browser]" playwright install chromium
 ```
+確認：
 ```powershell
 notebooklm --version
 ```
-重開 PowerShell 後再試一次也可以。印得出版本才算成功。
+印得出版本才算成功。
 
 設定檔位置為 `$HOME\.notebooklm\`。
