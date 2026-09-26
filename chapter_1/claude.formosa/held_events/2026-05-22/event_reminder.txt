@@ -1,0 +1,55 @@
+claude.formosa 花蓮 Claude 愛好者小聚活動提醒 / claude.formosa event reminder
+
+您好，
+我是 Samson，claude.formosa 召集人之一，您會收到信是因為您有報名參加 5/22（週五）花蓮 Claude 愛好者小聚。
+特別提醒您，活動的時間地點是：日期：2026/5/22（週五）
+時間：18:00 - 20:00
+地點：花蓮雲基地（花蓮市府前路 3 號）
+
+這次的小聚分享，除了我本人將示範從 Claude Design 轉移到 Claude Code 的作法，還有 Sophie 將示範如何用 Claude 來整理知識庫。
+
+我們希望建立一個互相交流的空間，互相了解不同的人在不同的應用場景下如何將 AI 導入。
+活動非常歡迎您分享，活動當下您可以帶著您的筆電不吝展示，不管是簡單還是複雜，
+或者您剛開始用、願意跟大家分享您使用的心路歷程，都很歡迎。
+
+除了 5/22，我們還有 6/26 以及 7/31，接下來如果大家都願意支持，我們就會持續定期舉辦下去。
+如果您有任何問題, 歡迎到我們的 Discord Channel 來發問: https://discord.gg/fWcPCyMBta
+
+期待活動當日您的到來。
+我是 Samson
+
+--
+我們保證不會亂發廣告信，但如果您未來不想收到我們的活動通知，您可以用您收信的信箱寄信到：
+claude.formosa.hualien+unsubscribe@gigahertz.us
+（內容寫什麼都可以，只有 Google 看得到），系統就會自動將您移除。
+ 
+
+Hi,
+
+I'm Samson, one of the organizers of claude.formosa.
+You're receiving this email because you registered for the Hualien Claude Enthusiasts Meetup on 5/22 (Friday).
+
+Here's a quick reminder of the event details:
+Date: Friday, May 22, 2026
+Time: 18:00 – 20:00
+Venue: Hualien Cloud Hub, No. 3, Fuqian Rd, Hualien City
+
+For this session, I'll personally be demonstrating how to go from Claude Design to Claude Code,
+and Sophie will be demonstrating how to use Claude to organize a knowledge base.
+
+We hope to create a space where people can connect and learn how others are integrating AI into their own contexts and workflows.
+Everyone is welcome to share! Feel free to bring your laptop and show us what you're working on, whether it's something simple or complex.
+Even if you're just getting started and want to share your early experience, we'd love to hear from you.
+
+In addition to 5/22, we also have meetups planned for 6/26 and 7/31.
+If the community continues to show up and support us, we'll keep going on a regular basis.
+If you have any questions, feel free to ask in our Discord channel: https://discord.gg/fWcPCyMBta
+Looking forward to seeing you there!
+Samson
+
+--
+We promise we won't spam you. However, if you'd prefer not to receive future event notifications,
+simply send an email from your registered address to:
+claude.formosa.hualien+unsubscribe@gigahertz.us
+(The content doesn't matter — only Google will see it.)
+The system will automatically remove you from the list.
