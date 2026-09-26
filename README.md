@@ -8,12 +8,12 @@
 
 ### Chapter 1 
 
-[skills](./skills/)
-[Sample Invoices](./chapter_1/sample_invoices/)
+- [skills](./skills/)
+- [Sample Invoices](./chapter_1/sample_invoices/)
 
 ### Chapter 2
 
-[website contents](./chapter_2/claude.formosa/)
+- [website contents](./chapter_2/claude.formosa/)
 
 ## claude.formosa communities
 
