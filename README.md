@@ -4,9 +4,16 @@
 
 [Software and Cloud Service List](./Software_and_Cloud_Service_List.md)
 
-## Chapter 1 Supplementary Materials
+## Supplementary Materials
+
+### Chapter 1 
 
 [skills](./skills/)
+[Sample Invoices](./chapter_1/sample_invoices/)
+
+### Chapter 2
+
+[website contents](./chapter_2/claude.formosa/)
 
 ## claude.formosa communities
 
@@ -14,13 +21,13 @@
 
 [https://discord.gg/fWcPCyMBta](https://discord.gg/fWcPCyMBta)
 
-![claude.formosa Discord](./claude-formosa-qr-discord.png)
+![claude.formosa Discord](./references/other_materials/claude-formosa-qr-discord.png)
 
 ### claude.formosa Threads
 
 [https://www.threads.com/@claude.formosa](https://www.threads.com/@claude.formosa)
 
-![claude.formosa Threads](./claude-formosa-qr-threads.png)
+![claude.formosa Threads](./references/other_materials/claude-formosa-qr-threads.png)
 
 ## Continue Learning
 
