@@ -10,6 +10,7 @@
 
 - [skills](./skills/)
 - [Sample Invoices](./chapter_1/sample_invoices/)
+- [Slides Material](./Agentic-AI-Eng-Workshop-Ch1.pdf)
 
 ### Chapter 2
 
