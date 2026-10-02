@@ -16,6 +16,10 @@
 
 - [website contents](./chapter_2/claude.formosa/)
 
+### Chapter 3
+
+- [frontent + backend](./chapter_3/startup-procedures.md)
+
 ## claude.formosa communities
 
 ### claude.formosa Discord Server
