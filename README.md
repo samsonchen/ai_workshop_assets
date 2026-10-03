@@ -18,7 +18,7 @@
 
 ### Chapter 3
 
-- [frontent + backend](./chapter_3/startup-procedures.md)：實作前導覽（架構圖、流程圖）
+- [frontent + backend](./chapter_3/README.md)：實作前導覽（架構圖、流程圖）
   - [步驟](./chapter_3/prompts/README.md)：一步一個檔案
 
 ## claude.formosa communities
