@@ -1,509 +1,194 @@
-# 匿名聊天室：Startup Procedures
+# 匿名聊天室：實作前導覽
 
 這份 Project 流程從「你目前知道的東西」開始，讓 Claude Code 幫你補上你還不知道的部分。架構文件 `docs/architecture.md` 是流程中由你和 Claude Code 一起產出的，不是事先給你的。
 
-## 開始前
+這一頁只有圖，用來在動手前講解。實際操作的步驟在 [prompts/](prompts/README.md)，一步一個檔案。
 
-### 你已經知道的
+## 1. 做完之後長什麼樣子
 
-- GitHub：開 repo、commit、push
-- GitHub Pages：可以把靜態網頁放上去給別人看
-- `/grilling`, `/design`, `/frontend-design` 這三個 skill 的用途
-- 這個聊天室打算用 Supabase 與 WebSocket 做即時傳訊（你在別的對話裡討論過，或有人建議過）
+網頁放在 GitHub Pages，每個人用自己的瀏覽器打開。訊息不經過 GitHub，而是透過 Supabase 即時轉送給其他人。
 
-### 你還不知道的（交給 Claude Code）
+```mermaid
+flowchart LR
+    subgraph dev["你的電腦"]
+        cc["Claude Code"]
+        code["anonymous-chat<br/>程式與文件"]
+        envLocal["本機金鑰檔<br/>不 commit"]
+        cc --> code
+        envLocal -.-> code
+    end
 
-- Supabase 的細節與設定步驟
-- 前端程式要怎麼寫
-- 前端要用什麼語言、什麼框架
-- 金鑰怎麼產生、要放在哪裡
+    subgraph gh["GitHub"]
+        repo["repo<br/>anonymous-chat"]
+        actions["Actions<br/>自動 build 與部署"]
+        secret["GitHub 上的金鑰設定"]
+        pages["GitHub Pages<br/>公開網址"]
+        repo --> actions --> pages
+        secret -.-> actions
+    end
 
-不知道的部分不用自己查。請 Claude Code 解釋到你看得懂，並寫進文件裡。
+    subgraph users["使用者"]
+        a["A 的瀏覽器<br/>電腦"]
+        b["B 的瀏覽器<br/>手機"]
+    end
 
-### 要先裝好的
+    supa[("Supabase<br/>即時通訊 WebSocket")]
 
-- Claude Code
-- Git
-- GitHub CLI（`gh`），並已執行過 `gh auth login`
-- Node.js 20 以上
-- GitHub 帳號、Supabase 帳號（可用 GitHub 登入）
+    code -->|"git push"| repo
+    pages -->|"載入網頁"| a
+    pages -->|"載入網頁"| b
+    a <-->|"送出 / 收到訊息"| supa
+    b <-->|"送出 / 收到訊息"| supa
 
-### 確認 GitHub 登入帶有 `workflow` 權限
-
-課堂上要把網頁自動發佈到 GitHub Pages，上傳的檔案裡有 `.github/workflows/` 資料夾。登入時如果沒有授予 `workflow` 權限，GitHub 會拒絕上傳。
-
-照課前安裝清單的方式登入（`gh auth login`，選 GitHub.com → HTTPS → 用 gh 認證 Git → 瀏覽器登入）預設就會有。檢查：
-
-```
-gh auth status
-```
-
-輸出裡要有這兩行（Windows 的 PowerShell 也一樣）：
-
-```
-✓ Logged in to github.com account <你的帳號>
-- Token scopes: 'gist', 'read:org', 'repo', 'workflow'
-```
-
-`Token scopes` 這一行要有 `'workflow'`。沒有的話，執行：
-
-```
-gh auth refresh -s workflow
+    classDef local fill:#fff3cd,stroke:#b8860b,color:#333
+    classDef cloud fill:#eef2f7,stroke:#6b7a94,color:#333
+    classDef secretNode fill:#ffebee,stroke:#c62828,color:#333
+    class cc,code local
+    class repo,actions,pages,supa,a,b cloud
+    class envLocal,secret secretNode
 ```
 
-照畫面指示在瀏覽器授權，再檢查一次。
+紅色是金鑰。哪一把可以放在前端、哪一把絕對不能出現，由架構文件「金鑰」那一節決定。
 
----
+## 2. 分兩個階段做
 
-## 步驟一：在 GitHub 開 repo（你）
+先做不連 Supabase 的版本，確定畫面和操作都對，再把「通訊」換成 Supabase。畫面的程式不用重寫。
 
-1. GitHub → New repository
-2. Repository name：`anonymous-chat`（可以自己取，後面網址會用到）
-3. 選 Public
-4. 勾 Add a README file
-5. `.gitignore` template 選 Node
-6. Create repository
+```mermaid
+flowchart LR
+    subgraph s1["階段一：P6～P8"]
+        ui1["畫面<br/>輸入代號、聊天、線上名單"]
+        com1["通訊<br/>不連外"]
+        ui1 <--> com1
+    end
 
-在 Terminal 把 repo 抓下來：
+    subgraph s2["階段二：P9"]
+        ui2["畫面<br/>同一份程式"]
+        com2["通訊<br/>改接 Supabase"]
+        ui2 <--> com2
+        com2 <--> supa2[("Supabase")]
+    end
 
-```
-gh repo clone <你的 GitHub 帳號>/anonymous-chat
-```
+    s1 ==>|"只換通訊"| s2
 
-```
-cd anonymous-chat
-```
-
----
-
-## 步驟二：寫需求說明（你）
-
-在 repo 裡建立 `docs/requirements.md`，用你自己的話寫。只寫你知道的，不知道的不要硬填。
-
-範本在 [requirements.md](requirements.md)
-
----
-
-## 步驟三：啟動 Claude Code（你）
-
-在 `anonymous-chat` 資料夾裡：
-
-```
-claude
+    classDef same fill:#eef2f7,stroke:#6b7a94,color:#333
+    classDef changed fill:#fff3cd,stroke:#b8860b,stroke-width:2px,color:#333
+    class ui1,ui2,com1 same
+    class com2,supa2 changed
 ```
 
----
+## 3. 一則訊息怎麼從 A 到 B
 
-## 步驟四：產出架構文件（你 + Claude Code）
+這張圖對應 P4-3 檢查清單的第一題：「訊息從我的瀏覽器送出後，經過哪裡、怎麼到別人的瀏覽器？」
 
-這一步分三段：先讓 Claude Code 問問題，再讓它寫，最後你檢查。
+```mermaid
+sequenceDiagram
+    autonumber
+    participant A as A 的瀏覽器
+    participant S as Supabase
+    participant B as B 的瀏覽器
 
-### 4-1 讓 Claude Code 先問問題
-
-```
-請讀 @docs/requirements.md。
-
-我要做這個匿名聊天室，最後要產出一份架構文件 docs/architecture.md。
-在寫之前，請先 grilling 問我問題，把需求問清楚。規則：
-1. 一次只問一題，等我回答再問下一題
-2. 只問我「使用者會看到什麼、會做什麼」這類問題
-3. 技術選擇（語言、框架、Supabase 用哪個功能、金鑰怎麼處理）不要問我，由你決定，寫文件時再解釋
-4. 你覺得問夠了就告訴我，不要直接開始寫
-```
-
-回答時不確定就說不確定，或說「你建議怎樣」。Claude Code 每個問題通常會附上它的建議，同意就回「用你的建議」。
-
-問題的內容和順序每次不一樣。一次實際問答的紀錄整理在 [附錄：grilling 參考答案](#附錄grilling-參考答案)，卡住時可以參考。
-
-Claude Code 問完會整理一份共識給你看。確認沒問題後，直接貼 4-2 的指令。只回「可以」的話，它會用自己的格式先寫一版，之後還要再照 4-2 重寫。
-
-### 4-2 讓 Claude Code 寫架構文件
-
-```
-我不是寫程式的人，請用我看得懂的中文寫架構文件，專有名詞第一次出現時用一句話解釋。
-
-文件要包含這些段落：
-1. 專案說明與目標
-2. 整體架構圖（用 mermaid 畫，看得出瀏覽器、GitHub Pages、Supabase 之間的關係）
-3. 技術選擇：前端用什麼語言和框架、用 Supabase 的哪個功能，每一項寫「選了什麼」和「為什麼」
-4. 兩個階段：
-   - 階段一：還沒接 Supabase 時，前端要能做到什麼程度、怎麼在 GitHub Pages 上看得到效果
-   - 階段二：接上 Supabase 之後的改變
-   兩個階段之間，前端程式要怎麼設計，才不用整個重寫
-5. 通訊約定：事件名稱、訊息的資料格式
-6. 資料流：進入聊天室、送出訊息、離開、斷線重連，各自發生什麼事
-7. 畫面清單：每個畫面有哪些元素、各自的行為（不規定顏色和樣式，那是 /design 的工作）
-8. 金鑰：這個專案會用到哪些金鑰、怎麼產生、放在哪裡、哪些可以公開、哪些絕對不能公開、怎麼避免被 commit 到 GitHub
-9. 安全與限制：別人可以送什麼奇怪的東西進來、前端要怎麼擋；免費方案有哪些上限要注意
-10. 這一版刻意不做的事，以及為什麼
-11. repo 的資料夾結構
-12. 部署到 GitHub Pages 的方式
-13. 驗證清單：階段一、階段二各自要測哪些項目才算完成
-
-先不要寫任何程式，也不要安裝任何東西。
+    A->>S: 用代號進入聊天室
+    B->>S: 用代號進入聊天室
+    S-->>A: 線上名單更新
+    S-->>B: 線上名單更新
+    A->>S: 送出訊息
+    S-->>B: 轉送訊息
+    Note over B: 先檢查內容<br/>當成純文字顯示，不當 HTML
+    S-->>A: 轉送訊息
+    Note over A,B: 斷線時顯示「重新連線中」，連回來自動補上
 ```
 
-### 4-3 檢查架構文件（你）
+## 4. 整個步驟的流程
 
-你看不懂程式沒關係，但要看得懂文件。用下面的問題檢查，看不懂的地方直接問 Claude Code。
+四個階段由左到右，每個階段裡由上往下。每一步做完才進下一步。黃色是你自己做，藍色是交給 Claude Code，綠色是你和 Claude Code 一起做。
 
-- [ ] 我能用自己的話講出：訊息從我的瀏覽器送出後，經過哪裡、怎麼到別人的瀏覽器？
-- [ ] 文件寫的前端語言和框架是什麼？為什麼選它？
-- [ ] 階段一（還沒接 Supabase）時，GitHub Pages 上看得到什麼？能做到什麼、做不到什麼？
-- [ ] 這個專案有哪幾把金鑰？哪一把可以放在前端？哪一把絕對不能出現在任何地方？
-- [ ] 金鑰在我的電腦上放哪個檔案？在 GitHub 上放哪裡？為什麼那個檔案不會被 commit？
-- [ ] 如果有人送一段惡意的文字進聊天室，前端怎麼處理？
-- [ ] 這一版沒做的事有哪些？我同意嗎？
-- [ ] 驗證清單裡的每一項，我知道要怎麼測嗎？
+```mermaid
+flowchart LR
+    subgraph prep["準備"]
+        direction TB
+        p0["P0 開始前<br/>裝好工具、確認 gh 權限"]
+        p1["P1 在 GitHub 開 repo"]
+        p2["P2 寫需求說明<br/>docs/requirements.md"]
+        p3["P3 啟動 Claude Code"]
+        p0 --> p1 --> p2 --> p3
+    end
 
-可以這樣問：
+    subgraph plan["規劃與設計"]
+        direction TB
+        p41["P4-1 Claude Code 問問題<br/>grilling"]
+        p42["P4-2 Claude Code<br/>寫架構文件"]
+        p43{"P4-3<br/>你看得懂嗎？"}
+        p44["P4-4 CLAUDE.md<br/>+ commit"]
+        p5["P5 /design 視覺設計<br/>docs/design.md"]
+        p41 --> p42 --> p43
+        p43 -->|"看不懂 / 要改"| p42
+        p43 -->|"確認"| p44 --> p5
+    end
 
-```
-請用三句話跟我解釋架構文件第 ___ 節，假設我完全不會寫程式。
-```
+    subgraph stage1["階段一：只有前端"]
+        direction TB
+        p6["P6 /frontend-design<br/>做前端"]
+        p6t{"本機測試<br/>OK？"}
+        p7["P7 commit / push"]
+        p8{"P8 GitHub Pages<br/>看得到嗎？"}
+        p6 --> p6t
+        p6t -->|"有問題"| p6
+        p6t -->|"OK"| p7 --> p8
+        p8 -->|"空白 / 失敗"| p7
+    end
 
-```
-如果我想要 ___，架構文件要改哪裡？先告訴我，不要直接改。
-```
+    subgraph stage2["階段二：接上 Supabase"]
+        direction TB
+        p91["P9-1 Claude Code<br/>說明要設定什麼"]
+        p92["P9-2 你在 Supabase<br/>網頁上操作、拿金鑰"]
+        p93["P9-3 Claude Code<br/>把前端接上"]
+        p94{"P9-4 兩個瀏覽器<br/>互傳 OK？"}
+        p95["P9-5 檢查金鑰<br/>commit、push"]
+        p10["P10 收尾<br/>文件與程式對一遍"]
+        p91 --> p92 --> p93 --> p94
+        p94 -->|"有問題"| p93
+        p94 -->|"OK"| p95 --> p10
+    end
 
-要修改就直接說，改完再檢查一次。全部確認後進下一步。
+    prep ==> plan ==> stage1 ==> stage2
 
-### 4-4 建立 CLAUDE.md 並 commit（Claude Code）
-
-```
-請建立 CLAUDE.md，內容包含：
-- 一句話說明這個專案
-- 開始任何工作前先讀 docs/architecture.md
-- 目前在「階段一」
-- 不可以把金鑰檔案 commit 進 git
-
-然後確認 .gitignore 已經包含架構文件裡提到的金鑰檔案。
-commit「requirements and architecture」並 push。
-```
-
----
-
-## 步驟五：用 `/design` 做視覺設計（你 + Claude Code）
-
-這一步的風格、配色、版面由你決定。
-
-```
-/design
-
-請依照 docs/architecture.md「畫面清單」那一節，設計這個聊天室的畫面。
-畫面清單裡的每個元素都要出現。
-風格：（寫你想要的，例：深色、像終端機、手機優先）
-```
-
-設計結果請 Claude Code 存進 repo，例如 `docs/design.md`，讓下一步可以讀。
-
-```
-請把這次的設計結果整理存成 docs/design.md，下一步做前端時會用到。
-```
-
----
-
-## 步驟六：用 `/frontend-design` 把前端做出來（Claude Code）
-
-```
-/frontend-design
-
-請依照 docs/architecture.md 的「階段一」，以及 docs/design.md 的設計，把前端做出來。
-
-要求：
-1. 用架構文件決定的語言、框架與資料夾結構
-2. 這一階段不要安裝或連接 Supabase
-3. 程式結構要照架構文件說的，讓階段二只需要換掉通訊的部分
-4. 架構文件提到 GitHub Pages 需要的設定（例如網址路徑）要一起做好
-5. 做完先確認可以 build，沒有錯誤
-6. 啟動本機預覽，告訴我網址，以及我要怎麼測試
+    classDef you fill:#fff3cd,stroke:#b8860b,color:#333
+    classDef claude fill:#e1f5ff,stroke:#0288d1,color:#333
+    classDef both fill:#e8f5e9,stroke:#2e7d32,color:#333
+    class p0,p1,p2,p3,p43,p6t,p8,p92,p94 you
+    class p42,p44,p6,p7,p91,p93,p95,p10 claude
+    class p41,p5 both
 ```
 
-照 Claude Code 給的方法測試，並對照架構文件「驗證清單」的階段一。有問題就把看到的狀況描述給 Claude Code，例如：
+## 5. 文件怎麼一路傳下去
 
-```
-我開了兩個分頁，A 送出的訊息 B 看不到。請找出原因並修正。
-```
+每一步的產出都寫成檔案存在 repo 裡，下一步讓 Claude Code 去讀。換電腦、重開 Claude Code 都接得上。
 
----
+```mermaid
+flowchart LR
+    req["docs/requirements.md<br/>你寫的需求"]
+    arch["docs/architecture.md<br/>架構文件"]
+    claudemd["CLAUDE.md<br/>給 Claude Code 的守則"]
+    design["docs/design.md<br/>視覺設計"]
+    fe["前端程式<br/>階段一"]
+    fe2["前端程式<br/>階段二"]
 
-## 步驟七：commit / push 到 GitHub（Claude Code）
+    req -->|"P4 grilling"| arch
+    arch -->|"P4-4"| claudemd
+    arch -->|"畫面清單"| design
+    arch --> fe
+    design --> fe
+    fe -->|"P9 只換通訊"| fe2
+    arch --> fe2
+    fe2 -.->|"P10 對照"| arch
 
-```
-請照 @docs/architecture.md 的部署方式，準備好部署到 GitHub Pages 需要的設定檔。
-
-然後：
-1. 顯示 git status 給我看
-2. 檢查有沒有不該 commit 的檔案（金鑰檔案、node_modules、build 產出）
-3. commit「frontend stage 1」並 push
-4. 告訴我接下來要在 GitHub 網頁上做什麼設定
-```
-
----
-
-## 步驟八：啟動 GitHub Pages 看前端（你）
-
-照 Claude Code 在上一步告訴你的設定做。一般是：
-
-1. repo → Settings → Pages
-2. Build and deployment 的 Source 選 GitHub Actions
-3. 到 Actions 分頁，等部署跑完（綠色勾勾）
-4. 第一次如果在設定 Source 之前就跑而失敗，按 Re-run all jobs
-5. 打開 `https://<你的 GitHub 帳號>.github.io/anonymous-chat/`
-
-確認你看到的效果跟架構文件「階段一」寫的一致。
-
-頁面打不開或是空白，回到 Claude Code：
-
-```
-GitHub Pages 的網址 ___ 打開是空白的。Actions 的結果是 ___。請找出原因。
+    classDef doc fill:#fff3cd,stroke:#b8860b,color:#333
+    classDef code fill:#eef2f7,stroke:#6b7a94,color:#333
+    class req,arch,claudemd,design doc
+    class fe,fe2 code
 ```
 
----
+## 開始動手
 
-## 步驟九：接上 Supabase（你 + Claude Code）
-
-### 9-1 請 Claude Code 說明要做什麼
-
-```
-現在要進入 @docs/architecture.md 的「階段二」，接上 Supabase。
-
-我不知道 Supabase 要怎麼設定。請先不要動程式，告訴我：
-1. Supabase 那邊要建立什麼、設定什麼
-2. 不要使用 Supabase CLI
-3. 哪些步驟你可以用指令幫我做，哪些需要我自己在網頁上操作
-4. 需要我自己操作的，請一步一步寫給我，寫到我知道要點哪裡
-5. 我的電腦是（macOS／Windows）
-```
-
-### 9-2 照步驟操作（你）
-
-照 Claude Code 列的步驟做。要登入或授權的步驟（例如在瀏覽器登入 Supabase）一定是你自己做。
-
-拿到金鑰之後，回去對照架構文件「金鑰」那一節：哪一把可以用、哪一把不能用。不能公開的那一把，不要貼到 Claude Code 的對話裡，也不要貼到任何地方。
-
-### 9-3 讓 Claude Code 把前端接上（Claude Code）
-
-```
-Supabase 那邊已經設定好了。請依照 docs/architecture.md 的「階段二」把前端接上 Supabase：
-
-1. 金鑰照架構文件「金鑰」那一節的方式存放，告訴我你放在哪個檔案、為什麼那個檔案不會被 commit
-2. GitHub Pages 部署時需要的金鑰設定，能用指令做的你做，需要我在 GitHub 網頁上做的告訴我步驟
-3. 只修改架構文件說要換掉的部分
-4. 做完確認可以 build，啟動本機預覽
-
-先不要 commit。
-```
-
-### 9-4 本機測試（你）
-
-用兩個不同的瀏覽器（或一般視窗加無痕視窗）測試，對照架構文件「驗證清單」的階段二。
-
-### 9-5 上線（Claude Code）
-
-```
-本機測試沒問題。請：
-1. 確認金鑰檔案沒有被加進 git
-2. 在整個 repo 裡搜尋，確認沒有任何不能公開的金鑰
-3. 把 CLAUDE.md 的「目前階段」改成階段二
-4. commit「connect Supabase」並 push
-```
-
-等 Actions 跑完，用電腦和手機同時打開 GitHub Pages 網址，互傳訊息。
-
----
-
-## 步驟十：收尾（Claude Code）
-
-```
-請檢查 docs/architecture.md 跟現在的程式是否一致。
-有不一致的地方列給我看，我決定要改文件還是改程式。
-```
-
----
-
-## 附錄：grilling 參考答案
-
-下面是步驟 4-1 一次實際問答的紀錄，依主題重新排列，題號是當時的順序。你遇到的問題不一定一樣，回答也可以不一樣。
-
-### 進入聊天室
-
-#### Q10 代號有什麼規則？
-
-- 長度：例如 1～12 個字
-- 可用字元：中文、英文、數字、emoji 都可以？
-- 前後空白自動去掉；全空白不能進入
-- 「Amy」和「amy」算同一個嗎？
-
-回答：用 Claude Code 的建議。1～12 字，中英文、數字、emoji 都可以，前後空白自動去掉，英文大小寫視為相同。
-
-#### Q2 兩個人用同一個代號會怎樣？
-
-- A. 不允許，提示「這個代號已經有人用了，請換一個」
-- B. 允許，兩個人同名
-- C. 允許，系統自動加編號，例如「小明#2」
-
-回答：A。對方離線後，代號可以再被使用。
-
-#### Q15 同一個人開兩個分頁（或手機、電腦各開一個）怎麼辦？
-
-- A. 一律擋，不管是不是本人
-- B. 同一個瀏覽器的第二個分頁提示「你已經在另一個分頁登入了」，其他裝置照 A
-- C. 允許，線上名單只算一個人
-
-另外：要不要有「離開」按鈕？
-
-回答：A，並且要有「離開」按鈕，按了馬上釋出代號。上一個分頁沒正常關掉的話，約 30 秒後代號會自動釋出。
-
-#### Q3 重新整理網頁或關掉再開，要重新輸入代號嗎？
-
-- A. 每次都回到輸入代號的畫面
-- B. 記住上次的代號，直接進入
-- C. 記住上次的代號，先填在輸入框裡，按確認才進入
-
-回答：C。上次的代號如果已經被別人用了，可以改用別的。
-
-### 聊天
-
-#### Q4 訊息有什麼限制？可以傳什麼？
-
-- A. 純文字，有長度上限（例如 500 字）
-- B. 純文字，另外有表情符號選單
-- C. 文字加圖片或檔案
-
-另外：訊息裡的網址要變成可以點的連結嗎？
-
-回答：A，上限 500 字。網址不變成連結。手機輸入法本來就能打 emoji，不另外做選單。
-
-#### Q5 送出訊息的操作方式？
-
-- 電腦上：Enter 送出，Shift+Enter 換行？
-- 手機上：Enter 是換行還是送出？
-
-回答：用 Claude Code 的建議。電腦 Enter 送出、Shift+Enter 換行；手機 Enter 換行，旁邊有送出按鈕。
-
-#### Q12 每則訊息上要顯示什麼資訊？
-
-- A. 代號 + 內容 + 時間（例如「14:32」）
-- B. 只有代號 + 內容
-- C. A，另外同一個人連續發的訊息合併，只在第一則顯示代號
-
-另外：每個代號要不要用不同顏色？
-
-回答：C。每個代號依名字自動分配固定顏色。時間只顯示時:分，跨日加一條日期分隔線。自己的訊息靠右、別人的靠左。
-
-#### Q1 新人進來時看得到之前的訊息嗎？
-
-- A. 空白，只看得到進來之後的訊息
-- B. 看得到最近一段時間的訊息，例如最近 50 則
-- C. 看得到所有歷史訊息
-
-回答：B，最近 50 則。
-
-#### Q8 訊息要保留多久？
-
-- A. 永久保存
-- B. 保留一段時間（例如 24 小時或 7 天）
-- C. 只保留最近 N 則（例如 200 則）
-
-回答：C，保留最近 200 則，畫面上註明「訊息只保留最近的 200 則」。
-
-### 線上狀態
-
-#### Q6 畫面上「誰在線上」怎麼呈現？
-
-- A. 電腦：側邊欄一直顯示線上名單；手機：預設收起來，頂端顯示「目前 N 人在線」，點了展開
-- B. 電腦和手機都只在頂端顯示人數，點了才看名單
-- C. 其他
-
-另外：自己的代號要特別標示嗎？
-
-回答：A，自己的名字標示「（你）」。
-
-#### Q7 有人進來或離開的提示，長什麼樣子？
-
-- A. 訊息之間插入一行灰色小字，例如「小明 加入了聊天室」，留在歷史裡
-- B. 短暫跳出的通知（toast），幾秒後消失
-- C. 兩者都要
-
-另外：網路斷線幾秒又連回來，要不要顯示「離開 → 加入」？
-
-回答：A。約 30 秒內重新連線的不顯示。
-
-### 斷線
-
-#### Q11 網路斷線時使用者會看到什麼？
-
-- A. 頂端顯示「連線中斷，重新連線中…」，輸入框暫時鎖住，連回來後自動補上漏掉的訊息
-- B. 不顯示任何狀態
-- C. 斷線就踢回輸入代號畫面
-
-另外：斷線時已經打好、還沒送出的字要保留嗎？
-
-回答：A，已經打的字保留。超過約 30 秒沒連回來才算離開。
-
-### 防洗版
-
-#### Q9 有人狂刷訊息或亂來怎麼辦？
-
-- A. 不處理，完全開放
-- B. 限制發送速度，送太快時輸入框暫時鎖住
-- C. B 再加上管理者可以踢人或刪訊息
-
-回答：A，第一版不做限制。Claude Code 會把它列為已知風險。C 需要管理者身分，等於要有登入，跟「不用登入」衝突。
-
-### 外觀
-
-#### Q13 整體的畫面風格？
-
-- 淺色、深色，還是跟著系統設定自動切換？
-- 簡潔俐落、溫暖輕鬆，還是復古（像老 BBS／終端機）？
-
-回答：接近東華大學企管系網站的配色。Claude Code 會去查網站的 CSS，再接著問 Q14。
-
-#### Q14 配色這樣取可以嗎？
-
-Claude Code 從企管系網站找到的顏色：酒紅 `#9F0050`、淡黃 `#FFE66F`、橘棕 `#C65213`，底色白與淺灰 `#F5F5F5`。
-
-- A. 酒紅當主色（標題列、送出按鈕、自己的訊息），淡黃點綴，底色白／淺灰
-- B. 橘棕當主色
-- C. 自己指定顏色
-
-回答：A。深色模式跟隨系統設定。
-
-### 寫完初稿後補充的資訊
-
-Claude Code 寫完初稿會列出它沒辦法確認的事。這次補了這幾項：
-
-| Claude Code 問的或文件裡待確認的 | 回答 |
-|---|---|
-| repo 是否公開 | 公開 |
-| Supabase 用哪個方案 | 免費版 |
-| 有沒有分頻道 | 單一聊天室，不分頻道 |
-| repo 名稱（影響 GitHub Pages 網址路徑） | 直接給 repo 網址，例如 `https://github.com/<你的 GitHub 帳號>/anonymous-chat.git` |
-
-補了免費版之後，Claude Code 會把免費方案的上限寫進文件，例如同時連線數、閒置一週專案會被暫停。數字以 Supabase 當時的官方說明為準。
-
----
-
-## 附錄：遇到問題時
-
-| 狀況 | 怎麼問 Claude Code |
-|---|---|
-| 看不懂 Claude Code 說的話 | 「請用不寫程式的人聽得懂的方式再講一次。」 |
-| 不確定 Claude Code 做的對不對 | 「這個改動符合 docs/architecture.md 嗎？哪一節？」 |
-| 畫面有錯 | 描述你做了什麼、預期看到什麼、實際看到什麼 |
-| 瀏覽器有錯誤訊息 | 打開瀏覽器的開發者工具 → Console，把紅色的訊息整段複製給 Claude Code |
-| 想加新功能 | 「我想加 ___。先告訴我架構文件要改哪裡，不要直接改程式。」 |
-
-## 附錄：老師的檢查點
-
-每組產出的 `architecture.md` 會不一樣。下面幾項是一定要有的，沒有就請學生回到步驟四補上：
-
-- 階段一在沒有 Supabase 的情況下，GitHub Pages 上要能看到可以操作的效果
-- 通訊的部分和畫面的部分分開，階段二只換通訊
-- 有明確的訊息格式
-- 收到別人的訊息要先檢查才顯示，且不能把訊息當 HTML 插進畫面
-- 金鑰一節要分出可以公開與不可以公開的兩種，並寫明本機與 GitHub 上各自存放的位置
-- 寫出代號可以被冒用、訊息不會保存這兩個限制
-- 驗證清單有分階段一、階段二
+照 [prompts/README.md](prompts/README.md) 的順序從 P0 開始。
