@@ -14,7 +14,7 @@
 
 ### Chapter 2
 
-- [website contents](./chapter_2/claude.formosa/)
+- [website contents](./chapter_2/README.md)
 
 ### Chapter 3
 
