@@ -1,12 +1,46 @@
 # 匿名聊天室：實作前導覽
 
-這份 Project 流程從「你目前知道的東西」開始，讓 Claude Code 幫你補上你還不知道的部分。架構文件 `docs/architecture.md` 是流程中由你和 Claude Code 一起產出的，不是事先給你的。
+這個 Project 從你已經知道的東西開始，你還不知道的部分交給 Claude Code 補上。架構文件 `docs/architecture.md` 要在流程中由你和 Claude Code 一起寫出來，不會事先給你。
 
-這一頁只有圖，用來在動手前講解。實際操作的步驟在 [prompts/](prompts/README.md)，一步一個檔案。
+這一頁是動手前講解用的圖。實際操作的步驟在 [prompts/](prompts/README.md)，一步一個檔案。
 
-## 1. 做完之後長什麼樣子
+## 1. 系統裡有哪些角色
 
-網頁放在 GitHub Pages，每個人用自己的瀏覽器打開。訊息不經過 GitHub，而是透過 Supabase 即時轉送給其他人。
+```mermaid
+flowchart TB
+    pc["電腦瀏覽器"]
+    phone["手機瀏覽器"]
+
+    subgraph supa["Supabase"]
+        rt["Realtime<br/>WebSocket 即時連線"]
+        db[("Database<br/>保存最近的訊息")]
+        bc["Broadcast<br/>把訊息轉給所有人"]
+        pr["Presence<br/>誰在線上"]
+        rt --- bc
+        rt --- pr
+    end
+
+    pc <-->|"wss"| rt
+    phone <-->|"wss"| rt
+    pc -.-> db
+    phone -.-> db
+
+    classDef browser fill:#fff3cd,stroke:#b8860b,color:#333
+    classDef rtNode fill:#e1f5ff,stroke:#0288d1,color:#333
+    classDef dbNode fill:#eef2f7,stroke:#6b7a94,color:#333
+    class pc,phone browser
+    class rt,bc,pr rtNode
+    class db dbNode
+```
+
+- 電腦和手機的瀏覽器打開同一個網頁，各自跟 Supabase 的 Realtime 建立一條 WebSocket 連線（`wss`，加密的即時連線）。
+- Broadcast：一個人送出訊息，Realtime 轉給所有連著的人。
+- Presence：記錄誰在線上，有人進來或離開時通知所有人。
+- Database：保存最近的訊息，新進來的人可以看到之前的訊息。瀏覽器直接讀寫，不經過 Realtime。要不要用、保存多少則，看你在 P4 寫出來的架構文件，所以圖上用虛線。
+
+## 2. 做完之後放在哪裡
+
+上一張圖只畫了執行時的角色。這張加上你的電腦和 GitHub：網頁放在 GitHub Pages，每個人用自己的瀏覽器打開。訊息不經過 GitHub，由 Supabase 轉給其他人。
 
 ```mermaid
 flowchart LR
@@ -48,11 +82,11 @@ flowchart LR
     class envLocal,secret secretNode
 ```
 
-紅色是金鑰。哪一把可以放在前端、哪一把絕對不能出現，由架構文件「金鑰」那一節決定。
+紅色是金鑰。哪一把可以放在前端、哪一把不能出現在任何地方，寫在架構文件的「金鑰」那一節。
 
-## 2. 分兩個階段做
+## 3. 分兩個階段做
 
-先做不連 Supabase 的版本，確定畫面和操作都對，再把「通訊」換成 Supabase。畫面的程式不用重寫。
+先做不連 Supabase 的版本，畫面和操作都確認過，再把「通訊」換成 Supabase。畫面的程式不用重寫。
 
 ```mermaid
 flowchart LR
@@ -77,15 +111,15 @@ flowchart LR
     class com2,supa2 changed
 ```
 
-## 3. 一則訊息怎麼從 A 到 B
+## 4. 一則訊息怎麼從 A 到 B
 
-這張圖對應 P4-3 檢查清單的第一題：「訊息從我的瀏覽器送出後，經過哪裡、怎麼到別人的瀏覽器？」
+P4-3 檢查清單的第一題：「訊息從我的瀏覽器送出後，經過哪裡、怎麼到別人的瀏覽器？」可以對照這張圖回答。
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant A as A 的瀏覽器
-    participant S as Supabase
+    participant S as Supabase Realtime
     participant B as B 的瀏覽器
 
     A->>S: 用代號進入聊天室
@@ -99,9 +133,9 @@ sequenceDiagram
     Note over A,B: 斷線時顯示「重新連線中」，連回來自動補上
 ```
 
-## 4. 整個步驟的流程
+## 5. 整個步驟的流程
 
-四個階段由左到右，每個階段裡由上往下。每一步做完才進下一步。黃色是你自己做，藍色是交給 Claude Code，綠色是你和 Claude Code 一起做。
+四個階段由左到右，每個階段裡由上往下。一步做完再進下一步。黃色是你做，藍色是 Claude Code 做，綠色是你和 Claude Code 一起做。
 
 ```mermaid
 flowchart LR
@@ -161,9 +195,9 @@ flowchart LR
     class p41,p5 both
 ```
 
-## 5. 文件怎麼一路傳下去
+## 6. 文件怎麼一路傳下去
 
-每一步的產出都寫成檔案存在 repo 裡，下一步讓 Claude Code 去讀。換電腦、重開 Claude Code 都接得上。
+每一步的產出都存成 repo 裡的檔案，下一步請 Claude Code 讀這些檔案。換電腦或重開 Claude Code，都可以從檔案接著做。
 
 ```mermaid
 flowchart LR
@@ -191,4 +225,4 @@ flowchart LR
 
 ## 開始動手
 
-照 [prompts/README.md](prompts/README.md) 的順序從 P0 開始。
+從 [prompts/README.md](prompts/README.md) 的 P0 開始。
