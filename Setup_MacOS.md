@@ -169,5 +169,4 @@ notebooklm --version
 
 ## 11. Claude Code Login
 
-Claude Code 記得一定要 login，所有的動作最後都會需要呼叫 Claude Code，login 是運作的必要條件。請在 Terminal 內打 `claude` 然後打 `/login` 進行。
-
+Claude Code 記得一定要 login，所有的動作最後都會需要呼叫 Claude Code，login 是運作的必要條件。可參考影片 [claude code login video](https://youtu.be/qLugqvHM09g)
