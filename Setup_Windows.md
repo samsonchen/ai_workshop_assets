@@ -183,3 +183,27 @@ notebooklm --version
 印得出版本才算成功。
 
 設定檔位置為 `$HOME\.notebooklm\`。
+
+### Google 瀏覽器判定失敗問題
+
+有些 Windows 的同學會碰到下面問題，這是 Google 認為這是自動化控制的瀏覽器，只給它一個不完整的 session，但 Google 為何如此判定的原因外界不會知道。
+
+![notebooklm login failed in Windows](./references/site_resources/notebooklm_login_failed_windows.png)
+
+如果碰到這個狀況，請改用 Firefox 重新進行流程，方法如下：
+
+1. 安裝 Firefox，請到 [Firefox Borwser](https://www.firefox.com/zh-TW/)。
+2. 安裝 Firefox 用的 Cookie 套件:
+```
+uv tool install --force "notebooklm-py[browser,cookies]"
+```
+3. 先登出原來的 notebooklm
+```
+notebooklm auth logout
+```
+4. 改用 Firefox 登入你的 Google Gemini AI 帳號
+```
+notebooklm login --browser-cookies firefox
+```
+
+這樣應該就可以了。
