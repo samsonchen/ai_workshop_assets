@@ -193,15 +193,15 @@ notebooklm --version
 如果碰到這個狀況，請改用 Firefox 重新進行流程，方法如下：
 
 1. 安裝 Firefox，請到 [Firefox Borwser](https://www.firefox.com/zh-TW/)。
-2. 安裝 Firefox 用的 Cookie 套件:
+2. 請到 PowerShell 安裝 Firefox 用的 Cookie 套件:
 ```
 uv tool install --force "notebooklm-py[browser,cookies]"
 ```
-3. 先登出原來的 notebooklm
+3. PowerShell 內先登出原來的 notebooklm
 ```
 notebooklm auth logout
 ```
-4. 改用 Firefox 登入你的 Google Gemini AI 帳號
+4. PowerShell 內改用 Firefox 登入你的 Google Gemini AI 帳號
 ```
 notebooklm login --browser-cookies firefox
 ```
