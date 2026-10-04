@@ -207,3 +207,8 @@ notebooklm login --browser-cookies firefox
 ```
 
 這樣應該就可以了。
+
+## 12. Claude Code Login
+
+Claude Code 記得一定要 login，所有的動作最後都會需要呼叫 Claude Code，login 是運作的必要條件。Login 的方法 [claude code login video](./references/site_resources/claude-code-login-windows.mp4)
+

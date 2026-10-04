@@ -166,3 +166,8 @@ uv tool run --from "notebooklm-py[browser]" playwright install chromium
 notebooklm --version
 ```
 印得出版本才算成功。
+
+## 11. Claude Code Login
+
+Claude Code 記得一定要 login，所有的動作最後都會需要呼叫 Claude Code，login 是運作的必要條件。請在 Terminal 內打 `claude` 然後打 `/login` 進行。
+
