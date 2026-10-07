@@ -12,6 +12,8 @@
 - [skills](./skills/)
 - [Sample Invoices](./chapter_1/sample_invoices/)
 - [Slides Material](./Agentic-AI-Eng-Workshop-Ch1.pdf)
+- [Claude AI + Gemini NotebookLM working together](https://youtu.be/Yz23AlW6KyM)
+- [Using ELI5 Skill](https://youtu.be/U6UCk_lrGac)
 
 ### Chapter 2
 
