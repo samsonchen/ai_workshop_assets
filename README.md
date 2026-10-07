@@ -8,18 +8,25 @@
 
 ### Chapter 1 
 
+- [Lecture Slides](./slides/Agentic-AI-Eng-Workshop-Ch1.pdf)
 - [skills](./skills/)
 - [Sample Invoices](./chapter_1/sample_invoices/)
 - [Slides Material](./Agentic-AI-Eng-Workshop-Ch1.pdf)
 
 ### Chapter 2
 
+- [Lecture Slides](./slides/Agentic-AI-Eng-Workshop-Ch2-Hands-on.pdf)
 - [BI Tool](./chapter_2/README.md)
 
 ### Chapter 3
 
 - [frontent + backend](./chapter_3/README.md)：實作前導覽（架構圖、流程圖）
   - [步驟](./chapter_3/prompts/README.md)：一步一個檔案
+
+### Chapter 4
+
+- [AI Agent](./chapter_4/README.md)：實作前導覽（架構圖、流程圖）
+  - [步驟](./chapter_4/prompts/README.md)
 
 ## claude.formosa communities
 
