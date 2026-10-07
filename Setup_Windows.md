@@ -80,7 +80,7 @@ winget list
 真的重複了就從「新增/移除程式」移掉不要的那份，或 `winget uninstall --id <ID>`。
 
 ## 4. Claude Code
-PowerShell：
+用官方 native 安裝法（PowerShell，之後會自動更新）：
 ```powershell
 irm https://claude.ai/install.ps1 | iex
 ```

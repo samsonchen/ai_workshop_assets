@@ -44,9 +44,6 @@ npm --version
 brew install --cask --adopt claude
 ```
 ```bash
-brew install --cask --adopt claude-code
-```
-```bash
 brew install --cask --adopt visual-studio-code
 ```
 ```bash
@@ -62,19 +59,35 @@ brew install --cask --adopt discord
 brew install --cask --adopt sourcetree
 ```
 
-確認 Claude Code：
+## 3. Claude Code
+用官方 native 安裝法（不需要 Node.js，之後會自動更新）：
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+裝完**重開終端機**再確認：
 ```bash
 claude --version
 ```
-## 3. Chrome Extensions
+
+印不出版本、出現 `command not found` 的話，是 `~/.local/bin` 還不在 PATH，執行：
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+```
+```bash
+exec zsh
+```
+再跑一次 `claude --version`。
+
+## 4. Chrome Extensions
 裝好 Chrome 後手動加：
 - [ ] [Claude in Chrome](https://claude.com/claude-in-chrome)
 - [ ] [Obsidian Web Clipper](https://chromewebstore.google.com/detail/obsidian-web-clipper/cnjifjpddelmedmihgijeibhnjfabmlf)
 
-## 4. Obsidian Plugins
+## 5. Obsidian Plugins
 Obsidian Plugin 要在有 Vault 下才能安裝，這裡先跳過，待課堂上再安裝。
 
-## 5. Cloud Service CLI
+## 6. Cloud Service CLI
 Wrangler CLI
 ```bash
 npm i -g wrangler
@@ -91,7 +104,7 @@ brew install supabase/tap/supabase
 supabase --version
 ```
 
-## 6. GitHub Shell Login
+## 7. GitHub Shell Login
 先將 GitHub CLI、Git 與 SourceTree 安裝好才進行。
 ```bash
 gh auth login
@@ -101,16 +114,16 @@ gh auth setup-git
 ```
 `gh auth login` 選項建議：GitHub.com → HTTPS → 用 gh 認證 Git → 瀏覽器登入。
 
-## 7. GitHub Claude Application
+## 8. GitHub Claude Application
 到 [GitHub Claude Application](https://github.com/apps/claude)，點 Configure 就可以了。
 
-## 8. Deactivate Conda base
+## 9. Deactivate Conda base
 有用 conda 的人跑這行，沒用的跳過。
 ```bash
 conda config --set auto_activate_base false
 ```
 
-## 9. Python
+## 10. Python
 1. uv（裝 Python，之後裝套件也用它）
 ```bash
 brew install uv
@@ -129,7 +142,7 @@ uv python install --preview-features python-install-default --default 3.12
 ```
 `--default` 不能省，沒有它只會裝出 `python3.12`，不會有 `python` 和 `python3`。
 
-3. 把 uv 的指令放到 PATH 最前面
+3. 把 uv 的指令放到 PATH 最前面（第 3 節已經加過這行的可以跳過）
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 ```
@@ -152,7 +165,7 @@ which python3
 ```
 要是 `/Users/<你的帳號>/.local/bin/python3`。不是的話，檢查 `~/.zshrc` 最後一行有沒有第 3 步那段 `export PATH`，然後重開終端機。
 
-## 10. Notebooklm-py
+## 11. Notebooklm-py
 裝完 Python 才可以裝這個。
 ```bash
 uv tool install "notebooklm-py[browser]"
@@ -167,6 +180,6 @@ notebooklm --version
 ```
 印得出版本才算成功。
 
-## 11. Claude Code Login
+## 12. Claude Code Login
 
 Claude Code 記得一定要 login，所有的動作最後都會需要呼叫 Claude Code，login 是運作的必要條件。可參考影片 [claude code login video](https://youtu.be/qLugqvHM09g)
