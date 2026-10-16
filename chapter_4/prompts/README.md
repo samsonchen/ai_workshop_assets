@@ -14,8 +14,8 @@
 | [P5 產生 Discord 設定文件並照做](P05-Discord設定.md) | 你 + Claude Code |
 | [P6 做出 agent](P06-做出Agent.md) | Claude Code |
 | [P7 自己測試](P07-自己測試.md) | 你 |
-| [P8 攻防：關掉防護看看](P08-攻防.md) | 你 + 同學 + 老師 |
-| [P9 收尾](P09-收尾.md) | Claude Code |
+| [P8 commit 正常版](P08-commit正常版.md) | Claude Code |
+| [P9 攻防：關掉防護看看](P09-攻防.md) | 你 + 同學 + 老師 |
 
 ## 附錄
 
