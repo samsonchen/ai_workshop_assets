@@ -15,6 +15,35 @@
 
 ## 2. 繳交流程
 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant S as 你
+    participant M as ndhu-ba-2026 頻道
+    participant SC as Scorer
+    participant C as 你的頻道
+    participant A as 你的 agent
+
+    rect rgb(238, 242, 247)
+    Note over S,SC: Step A：檢查 repo
+    S->>M: 貼 repo 網址
+    SC->>SC: 檢查 public、金鑰、新 repo、主題
+    SC-->>S: 私訊：不合規的原因，或邀請連結
+    end
+
+    rect rgb(232, 245, 233)
+    Note over S,A: Step B：看 agent 運作（先把 agent 開起來）
+    S->>SC: 點邀請連結，把 Scorer 加進你的 Server
+    S->>C: 輸入 /ready
+    SC->>C: 可以開始
+    S->>C: 操作一次（例如傳一張照片）
+    A->>C: 回覆處理結果
+    S->>C: 輸入 /done（30 分鐘沒輸入就自動評分）
+    SC->>SC: 對照頻道對話與 repo 程式評分
+    SC-->>S: 私訊：結果與建議
+    end
+```
+
 ### Step A：貼 repo 網址
 
 1. 在 #ndhu-ba-2026 貼上 repo 網址，`https://github.com/你的帳號/你的repo` 或後面加 `.git` 都可以。
