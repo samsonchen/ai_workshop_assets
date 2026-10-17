@@ -16,32 +16,17 @@
 ## 2. 繳交流程
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant S as 你
-    participant M as ndhu-ba-2026 頻道
-    participant SC as Scorer
-    participant C as 你的頻道
-    participant A as 你的 agent
+flowchart TB
+    a1["1. 在 ndhu-ba-2026 貼 repo 網址"] --> a2["2. 收到私訊，點邀請連結<br/>把 Scorer 加進你的 Server"]
+    a2 --> b1["3. 開著你的 agent<br/>在 agent 的頻道輸入 /ready"]
+    b1 --> b2["4. 操作一次 agent"]
+    b2 --> b3["5. 輸入 /done"]
+    b3 --> b4["6. 收到私訊：分數與建議"]
 
-    rect rgb(238, 242, 247)
-    Note over S,SC: Step A：檢查 repo
-    S->>M: 貼 repo 網址
-    SC->>SC: 檢查 public、金鑰、新 repo、主題
-    SC-->>S: 私訊：不合規的原因，或邀請連結
-    end
-
-    rect rgb(232, 245, 233)
-    Note over S,A: Step B：看 agent 運作（先把 agent 開起來）
-    S->>SC: 點邀請連結，把 Scorer 加進你的 Server
-    S->>C: 輸入 /ready
-    SC->>C: 可以開始
-    S->>C: 操作一次（例如傳一張照片）
-    A->>C: 回覆處理結果
-    S->>C: 輸入 /done（30 分鐘沒輸入就自動評分）
-    SC->>SC: 對照頻道對話與 repo 程式評分
-    SC-->>S: 私訊：結果與建議
-    end
+    classDef a fill:#eef2f7,stroke:#6b7a94,color:#333
+    classDef b fill:#e8f5e9,stroke:#2e7d32,color:#333
+    class a1,a2 a
+    class b1,b2,b3,b4 b
 ```
 
 ### Step A：貼 repo 網址
