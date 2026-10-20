@@ -36,6 +36,7 @@
 
 ```
 請幫我建 .env, 內容如下:
+
 DISCORD_TOKEN=你的bot_token
 CHANNEL_ID=你的頻道ID
 CLAUDE_MODEL=haiku
