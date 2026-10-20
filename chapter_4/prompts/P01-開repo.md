@@ -4,7 +4,7 @@
 
 1. GitHub → New repository
 2. Repository name：`food-photo-agent`（可以自己取）
-3. 選 **Private**（裡面會有同學傳的照片和紀錄，不要公開）
+3. 選 **Public**
 4. 勾 Add a README file
 5. `.gitignore` template 選 **Python**
 6. Create repository
